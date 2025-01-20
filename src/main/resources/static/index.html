@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Component Beispiel</title>
+  <script src="./js/world-steps.js" type="module"></script>
+  <script src="./js/gallery.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
+</head>
+<body>
+
+
+<style>
+
+  #scroll-buttons {
+    position: fixed;
+    top: 20px; /* Position von oben */
+    right: 20px; /* Position von rechts */
+    display: flex;
+    flex-direction: row; /* Horizontale Anordnung */
+    gap: 10px; /* Abstand zwischen Buttons */
+    z-index: 1000; /* Sicherstellen, dass die Buttons über dem Content sind */
+  }
+
+  #scroll-buttons button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+  }
+
+  #scroll-buttons button:hover {
+    background-color: #0056b3;
+  }
+
+  #scroll-buttons img {
+    width: 24px;
+    height: 24px;
+  }
+
+
+</style>
+
+<div id="scroll-buttons" class="scroll-buttons">
+  <button id="scroll-top" class="btn btn-primary">
+    <img src="http://localhost:8080/icons/world-map.png" alt="Nach oben" width="20" height="20">
+  </button>
+  <button id="scroll-content" class="btn btn-primary">
+    <img src="http://localhost:8080/icons/checkpoint.png" alt="Zu Content" width="20" height="20">
+  </button>
+  <button id="scroll-iframe" class="btn btn-primary">
+    <img src="http://localhost:8080/icons/album.png" alt="Zum iFrame" width="20" height="20">
+  </button>
+
+</div>
+
+
+<h1 class="my-4">Pixels Around The World</h1>
+<world-steps id="travel-map"></world-steps>
+
+<div id="stop-info">
+
+  <p id="stop-name"></p>
+
+  <p id="stop-description"></p>
+</div>
+
+<gallery-component id="gallery"></gallery-component>
+
+
+
+<script>
+
+
+  // Scroll-Buttons Funktionen
+  document.getElementById('scroll-top').addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  document.getElementById('scroll-content').addEventListener('click', () => {
+    const stopInfo = document.getElementById('stop-info');
+    if (stopInfo) {
+      stopInfo.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+
+  document.getElementById('scroll-iframe').addEventListener('click', () => {
+    const gallery = document.getElementById('gallery');
+    if (gallery) {
+      gallery.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+
+
+
+  async function fetchAndSetStops(webComponentId, apiEndpoint) {
+    try {
+      const webComponent = document.getElementById(webComponentId);
+
+      if (!webComponent) {
+        console.error(`Web component with ID "${webComponentId}" not found.`);
+        return;
+      }
+
+      // Fetch stops from the Spring Boot API
+      const response = await fetch(apiEndpoint);
+
+      if (!response.ok) {
+        console.error(`Failed to fetch stops: ${response.statusText}`);
+        return;
+      }
+
+      const stops = await response.json();
+
+      // Validate stops structure
+      if (!Array.isArray(stops)) {
+        console.error('Invalid stops data. Expected an array.');
+        return;
+      }
+
+      // Dynamically add domain and port to the preview URLs
+      const domain = `http://localhost:8080/`; // You can replace this with the dynamic domain if needed
+
+      stops.forEach(stop => {
+        if (stop.preview) {
+          // Encode the preview URL to handle spaces and other special characters
+          const encodedPreview = encodeURIComponent(stop.preview).replace(/%2F/g, '/'); // Preserve slashes
+          stop.preview = `${domain}${encodedPreview.startsWith('/') ? '' : '/'}${encodedPreview}`;
+        }
+      });
+
+      console.log(stops);
+
+      // Use the setStops method of the web component
+      if (typeof webComponent.setStops === 'function') {
+        webComponent.setStops(stops);
+      } else {
+        console.error('The web component does not support setStops method.');
+      }
+    } catch (error) {
+      console.error('Error fetching and setting stops:', error);
+    }
+  }
+
+
+
+  // Load stops from Spring Boot API once the page is loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    fetchAndSetStops('travel-map', 'http://localhost:8080/api/stops');
+  });
+
+
+
+  // Event listener for stop clicks
+  const mapComponent = document.getElementById('travel-map');
+  mapComponent.addEventListener('stopClicked', (event) => {
+    const { name, description, folder } = event.detail;
+
+    // Update stop info section
+    document.getElementById('stop-name').textContent = `Name: ${name}`;
+
+    document.getElementById('stop-description').textContent = `Beschreibung: ${description}`;
+
+    // Update iframe content dynamically
+    loadGallery(folder, "gallery");
+  });
+
+  function loadLocationContent(folder) {
+    const iframe = document.getElementById('location-frame');
+    iframe.src = `media/${folder}/location.html`;
+  }
+
+
+
+  async function loadGallery(stopName, componentId) {
+
+    const apiUrl = `http://localhost:8080/api/gallery/${stopName}`;
+
+
+    try {
+      // Daten von der API abrufen
+      const response = await fetch(apiUrl);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch gallery data: ${response.statusText}`);
+      }
+
+      const galleryData = await response.json();
+
+      // Sicherstellen, dass das angegebene Element existiert
+      const component = document.getElementById(componentId);
+      if (!component) {
+        console.error(`Component with ID '${componentId}' not found.`);
+        return;
+      }
+
+      const galleryComponent = document.querySelector('gallery-component'); // Zugriff auf das GalleryComponent-Element
+      galleryComponent.setGallery(galleryData); // Galerie befüllen
+
+
+    } catch (error) {
+      console.error('Error loading gallery:', error);
+    }
+  }
+
+
+
+</script>
+</body>
+</html>
