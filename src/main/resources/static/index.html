@@ -69,12 +69,6 @@
 <h1 class="my-4">Pixels Around The World</h1>
 <world-steps id="travel-map"></world-steps>
 
-<div id="stop-info">
-
-  <p id="stop-name"></p>
-
-  <p id="stop-description"></p>
-</div>
 
 <gallery-component id="gallery"></gallery-component>
 
@@ -104,6 +98,11 @@
 
 
 
+
+
+
+
+
   async function fetchAndSetStops(webComponentId, apiEndpoint) {
     try {
       const webComponent = document.getElementById(webComponentId);
@@ -113,9 +112,11 @@
         return;
       }
 
-      // Fetch stops from the Spring Boot API
-      const response = await fetch(apiEndpoint);
+      // Use window.location.origin to dynamically determine the host
+      const domain = window.location.origin;
 
+      // Fetch stops from the API
+      const response = await fetch(`${domain}${apiEndpoint}`);
       if (!response.ok) {
         console.error(`Failed to fetch stops: ${response.statusText}`);
         return;
@@ -123,18 +124,9 @@
 
       const stops = await response.json();
 
-      // Validate stops structure
-      if (!Array.isArray(stops)) {
-        console.error('Invalid stops data. Expected an array.');
-        return;
-      }
-
-      // Dynamically add domain and port to the preview URLs
-      const domain = `http://localhost:8080/`; // You can replace this with the dynamic domain if needed
-
+      // Dynamically add domain to the preview URLs
       stops.forEach(stop => {
         if (stop.preview) {
-          // Encode the preview URL to handle spaces and other special characters
           const encodedPreview = encodeURIComponent(stop.preview).replace(/%2F/g, '/'); // Preserve slashes
           stop.preview = `${domain}${encodedPreview.startsWith('/') ? '' : '/'}${encodedPreview}`;
         }
@@ -151,11 +143,9 @@
     }
   }
 
-
-
-  // Load stops from Spring Boot API once the page is loaded
+  // Load stops dynamically
   document.addEventListener('DOMContentLoaded', () => {
-    fetchAndSetStops('travel-map', 'http://localhost:8080/api/stops');
+    fetchAndSetStops('travel-map', '/api/stops');
   });
 
 
@@ -165,10 +155,6 @@
   mapComponent.addEventListener('stopClicked', (event) => {
     const { name, description, folder } = event.detail;
 
-    // Update stop info section
-    document.getElementById('stop-name').textContent = `Name: ${name}`;
-
-    document.getElementById('stop-description').textContent = `Beschreibung: ${description}`;
 
     // Update iframe content dynamically
     loadGallery(folder, "gallery");
@@ -181,31 +167,24 @@
 
 
 
+
   async function loadGallery(stopName, componentId) {
-
-    const apiUrl = `http://localhost:8080/api/gallery/${stopName}`;
-
-
+    const apiUrl = `${window.location.origin}/api/gallery/${stopName}`;
     try {
-      // Daten von der API abrufen
       const response = await fetch(apiUrl);
       if (!response.ok) {
         throw new Error(`Failed to fetch gallery data: ${response.statusText}`);
       }
 
       const galleryData = await response.json();
-
-      // Sicherstellen, dass das angegebene Element existiert
       const component = document.getElementById(componentId);
-      if (!component) {
+
+      if (component) {
+        const galleryComponent = document.querySelector('gallery-component');
+        galleryComponent.setGallery(galleryData);
+      } else {
         console.error(`Component with ID '${componentId}' not found.`);
-        return;
       }
-
-      const galleryComponent = document.querySelector('gallery-component'); // Zugriff auf das GalleryComponent-Element
-      galleryComponent.setGallery(galleryData); // Galerie befüllen
-
-
     } catch (error) {
       console.error('Error loading gallery:', error);
     }
