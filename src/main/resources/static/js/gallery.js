@@ -81,8 +81,7 @@ class Custom360Viewer extends HTMLElement {
     const isVideo = mediaPath.endsWith('.mp4') || mediaPath.endsWith('.webm');
     const container = this.shadowRoot.getElementById('renderer-container');
     container.innerHTML = ''; // Clear previous content
-    console.log(mediaPath);
-    console.log("Panorama: " + this.panorama3D)
+
     if (this.panorama3D) {
       if (isVideo) {
         this.initVideo3D(mediaPath);
@@ -505,7 +504,6 @@ class GalleryComponent extends HTMLElement {
 
     this.currentIndex = (this.currentIndex - 1 + this.galleryItems.length) % this.galleryItems.length;
     const viewer = this.shadowRoot.querySelector('custom-360-viewer');
-    console.log(viewer); // Ensure this logs the correct element
     const item = this.galleryItems[this.currentIndex];
     viewer.changeMedia(item.src);
     viewer.setPanorama3D(item.panorama)

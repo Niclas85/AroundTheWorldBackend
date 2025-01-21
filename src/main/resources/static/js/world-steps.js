@@ -120,7 +120,6 @@ class WorldSteps extends HTMLElement {
       </div>
     `;
 
-    console.log("render")
   }
 
   initializeMap() {

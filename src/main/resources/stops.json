@@ -1,5 +1,5 @@
 [
-  { "name": "Test", "coords": [42.3769, 8.5417], "description": "Beschreibung zu Test.", "folder": "00_Test", "preview": "previews/Test.jpg", "region": 1 },
+
   { "name": "Zürich", "coords": [47.3769, 8.5417], "description": "Beschreibung zu Zürich.", "folder": "01_Zuerich", "preview": "previews/Zuerich.jpg", "region": 1 },
   { "name": "Cusco", "coords": [-13.532, -71.9675], "description": "Cusco, die historische Hauptstadt des Inkareichs, ist bekannt für ihre Architektur, die eine Mischung aus Inka- und kolonialer Architektur darstellt.", "folder": "02_Cusco", "preview": "previews/Cusco.jpg", "region": 1 },
   { "name": "Aguas Caliente", "coords": [-13.1589, -72.5349], "description": "Aguas Caliente ist ein kleines, aber beliebtes Dorf am Fuß von Machu Picchu, bekannt für seine heißen Quellen.", "folder": "03_AguasCaliente", "preview": "previews/AguasCaliente.jpg", "region": 1 },
