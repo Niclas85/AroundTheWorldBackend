@@ -114,18 +114,26 @@ class WorldSteps extends HTMLElement {
 
 
 
-  // Verschiebe die Funktionen als Methoden der Klasse
   showPreview(event, stop) {
     const preview = this.preview;
+
+    // Prüfe, ob es sich um ein Leaflet-Event (Marker) oder ein normales MouseEvent handelt
+    const mouseEvent = event.originalEvent || event;
+
+
+
+
     preview.style.display = 'block';
-    preview.style.left = `${event.pageX + 10}px`;
-    preview.style.top = `${event.pageY + 10}px`;
+    preview.style.left = `${mouseEvent.pageX + 10}px`;
+    preview.style.top = `${mouseEvent.pageY + 10}px`;
     preview.innerHTML = `
-      <h5>${stop.name}</h5>
-      <p>${stop.description}</p>
-      <img src=${stop.preview} alt="${stop.name}" style="max-width: 200px; max-height: 100px;">
-    `;
+    <h5>${stop.name}</h5>
+    <p>${stop.description}</p>
+    <img src="${stop.preview}" alt="${stop.name}" style="max-width: 200px; max-height: 100px;">
+  `;
   }
+
+
 
   hidePreview() {
     this.preview.style.display = 'none';
@@ -179,8 +187,7 @@ class WorldSteps extends HTMLElement {
         });
 
 
-
-        // Hover-Events für Button
+        // Hover-Events für Marker
         marker.addEventListener('mouseover', (e) => this.showPreview(e, stop));
         marker.addEventListener('mouseout', () => this.hidePreview());
 
