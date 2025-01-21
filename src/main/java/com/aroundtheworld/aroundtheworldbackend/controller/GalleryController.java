@@ -16,11 +16,14 @@ public class GalleryController {
     @Value("${media.base-path}")
     private String mediaBasePath; // Configurable base path for media files
 
+    private String mediaPath = "media";
+
     @GetMapping("/api/gallery/{stop}")
     public ResponseEntity<List<Map<String, Object>>> getGallery(
             @PathVariable String stop,
             @RequestHeader(value = "Host") String host) { // Host header for constructing the full URL
-        File stopFolder = new File(mediaBasePath, stop);
+        File stopFolder = new File(mediaBasePath + "/" + mediaPath , stop);
+        System.out.println(stopFolder);
         List<Map<String, Object>> gallery = new ArrayList<>();
 
         if (!stopFolder.exists() || !stopFolder.isDirectory()) {
@@ -60,13 +63,13 @@ public class GalleryController {
             }
 
 
-
             boolean thumbnailExists = thumbnailFile.exists();
+
 
             // Construct full URLs
             String baseUrl = "http://" + host;
-            String fileUrl = baseUrl + "/" + stop + "/" + file.getName();
-            String thumbnailUrl = thumbnailExists ? baseUrl + "/" + stop + "/" + thumbnailName : null;
+            String fileUrl = baseUrl + "/" + mediaPath + "/" + stop + "/" + file.getName();
+            String thumbnailUrl = thumbnailExists ? baseUrl + "/" + mediaPath + "/" + stop + "/" + thumbnailName : null;
 
             // Create entry
             Map<String, Object> entry = new HashMap<>();

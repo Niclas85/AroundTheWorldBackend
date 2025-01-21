@@ -180,6 +180,9 @@ class WorldSteps extends HTMLElement {
 
 
 
+        // Hover-Events für Button
+        marker.addEventListener('mouseover', (e) => this.showPreview(e, stop));
+        marker.addEventListener('mouseout', () => this.hidePreview());
 
         this.layers.push(marker);
 
