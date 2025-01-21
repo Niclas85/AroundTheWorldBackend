@@ -1,5 +1,6 @@
 package com.aroundtheworld.aroundtheworldbackend.controller;
 
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,9 +15,26 @@ import java.util.*;
 public class GalleryController {
 
     @Value("${media.base-path}")
-    private String mediaBasePath; // Configurable base path for media files
+    private String linuxBasePath; // Standardwert für Linux
+
+    @Value("${media.base-path.windows}")
+    private String windowsBasePath; // Windows-spezifischer Pfad
+
+    private String mediaBasePath;
 
     private String mediaPath = "media";
+
+    @PostConstruct
+    public void determineMediaBasePath() {
+        if (System.getProperty("os.name").toLowerCase().contains("win")) {
+            mediaBasePath = windowsBasePath;
+        } else {
+            mediaBasePath = linuxBasePath;
+        }
+        System.out.println("Using media base path: " + mediaBasePath);
+    }
+
+
 
     @GetMapping("/api/gallery/{stop}")
     public ResponseEntity<List<Map<String, Object>>> getGallery(
