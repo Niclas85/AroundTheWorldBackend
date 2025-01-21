@@ -474,9 +474,6 @@ class GalleryComponent extends HTMLElement {
   loadGallery() {
     const galleryContainer = this.shadowRoot.querySelector('.gallery');
     const viewer = this.shadowRoot.querySelector('custom-360-viewer');
-    console.log(typeof viewer.changeMedia); // Should log 'function'
-    console.log(typeof viewer.setPanorama3D); // Should log 'function'
-    console.log(viewer); // Ensure this logs the correct element
     galleryContainer.innerHTML = ''; // Alte Inhalte entfernen
 
     this.galleryItems.forEach((item, index) => {

@@ -73,20 +73,54 @@ class WorldSteps extends HTMLElement {
           box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
           z-index: 1000;
         }
+        
+        #content {
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: #f9f9f9;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+#content:hover {
+  background-color: #e9ecef;
+  transform: scale(1.02);
+}
+
+#stop-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  transition: opacity 0.3s;
+}
+
+#stop-description {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #6c757d;
+  transition: opacity 0.3s;
+}
+        
       </style>
+
+
 
       <div class="container">
         <div class="d-flex">
           <div id="map" style="flex: 1;"></div>
           <div id="steps-buttons"></div>
         </div>
-        <div id="content">
-          <h2 id="stop-title"></h2>
-          <p id="stop-description"></p>
-        </div>
+ <div id="content" class="p-3 bg-light rounded shadow-sm">
+  <h2 id="stop-title" class="text-primary"></h2>
+  <hr />
+  <p id="stop-description" class="text-muted"></p>
+</div>
         <div id="preview"></div>
       </div>
     `;
+
+    console.log("render")
   }
 
   initializeMap() {
@@ -119,9 +153,6 @@ class WorldSteps extends HTMLElement {
 
     // Prüfe, ob es sich um ein Leaflet-Event (Marker) oder ein normales MouseEvent handelt
     const mouseEvent = event.originalEvent || event;
-
-
-
 
     preview.style.display = 'block';
     preview.style.left = `${mouseEvent.pageX + 10}px`;
@@ -249,17 +280,25 @@ class WorldSteps extends HTMLElement {
 
 
 
-  updateContent(title, description) {
+  updateContent(name, description) {
     const titleElement = this.shadowRoot.querySelector('#stop-title');
     const descriptionElement = this.shadowRoot.querySelector('#stop-description');
-    // Reset stop info content
-    document.getElementById('stop-name').textContent = '';
-    document.getElementById('stop-description').textContent = '';
 
-    // Update stop info section
-    document.getElementById('stop-name').textContent = `Name: ${name}`;
-    document.getElementById('stop-description').textContent = `Beschreibung: ${description}`;
+    // Hinzufügen von Übergangseffekten
+    titleElement.style.opacity = '0';
+    descriptionElement.style.opacity = '0';
+
+    setTimeout(() => {
+      // Aktualisiere Inhalte nach kurzer Verzögerung
+      titleElement.textContent = name;
+      descriptionElement.textContent = description;
+
+      // Sichtbarkeit wiederherstellen
+      titleElement.style.opacity = '1';
+      descriptionElement.style.opacity = '1';
+    }, 200); // Verzögerung in Millisekunden
   }
+
 
 
 
