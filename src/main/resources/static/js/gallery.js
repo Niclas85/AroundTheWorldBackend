@@ -451,7 +451,7 @@ class GalleryComponent extends HTMLElement {
           <button id="prev" class="prev">◀</button>
           <button id="next" class="next">▶</button>
         </div>
-        <custom-360-viewer media-path="360Pic.jpg" panorama3d="true"></custom-360-viewer>
+        <custom-360-viewer id="360Viewer" media-path="black.png" panorama3d="true"></custom-360-viewer>
       </div>
     `;
 

@@ -28,8 +28,10 @@ public class GalleryController {
     public void determineMediaBasePath() {
         if (System.getProperty("os.name").toLowerCase().contains("win")) {
             mediaBasePath = windowsBasePath;
+            System.out.println("Windows system path = " + windowsBasePath);
         } else {
             mediaBasePath = linuxBasePath;
+            System.out.println("Windows system path = " + windowsBasePath);
         }
         System.out.println("Using media base path: " + mediaBasePath);
     }
@@ -41,7 +43,8 @@ public class GalleryController {
             @PathVariable String stop,
             @RequestHeader(value = "Host") String host) { // Host header for constructing the full URL
         File stopFolder = new File(mediaBasePath + "/" + mediaPath , stop);
-        System.out.println(stopFolder);
+        System.out.println("File    :   " + mediaBasePath + "/" + mediaPath + stop);
+        System.out.println("Stopsfolder: " + stopFolder);
         List<Map<String, Object>> gallery = new ArrayList<>();
 
         if (!stopFolder.exists() || !stopFolder.isDirectory()) {

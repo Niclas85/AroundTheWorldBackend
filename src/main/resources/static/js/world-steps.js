@@ -74,33 +74,71 @@ class WorldSteps extends HTMLElement {
           z-index: 1000;
         }
         
-        #content {
+#content {
   margin-top: 20px;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  background: #f9f9f9;
-  transition: background-color 0.3s, transform 0.3s;
+  padding: 25px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #ffffff, #f8f9fa);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  overflow: hidden;
+}
+
+#content::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(to right, #007bff, #00c6ff);
+  transform: translateX(-50%);
 }
 
 #content:hover {
-  background-color: #e9ecef;
-  transform: scale(1.02);
+  background: linear-gradient(135deg, #f0f0f0, #e9ecef);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 }
 
+/* --- Titel-Box --- */
 #stop-title {
   font-size: 1.8rem;
   font-weight: bold;
-  margin-bottom: 10px;
-  transition: opacity 0.3s;
+  text-align: center;
+  padding: 15px;
+  background: linear-gradient(90deg, #0056b3, #007bff);
+  color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
 }
 
-#stop-description {
-  font-size: 1.2rem;
-  line-height: 1.6;
-  color: #6c757d;
-  transition: opacity 0.3s;
+#stop-title:hover {
+  transform: scale(1.05);
 }
+
+/* --- Beschreibung-Box --- */
+#stop-description {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  padding: 15px;
+  background: white;
+  color: #6c757d;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+#stop-description:hover {
+  transform: scale(1.02);
+  opacity: 0.9;
+}
+
+
+
         
       </style>
 

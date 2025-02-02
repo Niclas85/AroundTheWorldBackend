@@ -15,6 +15,7 @@ public class StopService {
         try {
             ObjectMapper mapper = new ObjectMapper();
             InputStream is = getClass().getResourceAsStream("/stops.json");
+            System.out.println(is);
             return mapper.readValue(is, new TypeReference<List<Stop>>() {});
         } catch (Exception e) {
             throw new RuntimeException("Fehler beim Lesen der Stops", e);

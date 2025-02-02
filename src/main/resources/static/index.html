@@ -50,23 +50,90 @@
   }
 
 
+  #header-container {
+    width: 100%;
+    max-width: inherit; /* Erbt die Breite von #travel-map */
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    padding: 15px;
+    background-color: #e3f2fd; /* 🌟 Sehr helles Blau */
+    color: black;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: width 0.3s ease-in-out;
+  }
+
+  /* ✨ Abstand zur Map */
+  #header-container {
+    margin-bottom: 10px; /* 10px Abstand nach unten */
+  }
+
+  #header-title {
+    font-size: 2.2rem;
+    font-weight: bold;
+    font-family: 'Arial', sans-serif;
+    color: #d9d9d9; /* Weißgrau */
+    text-stroke: 2px black; /* Funktioniert in WebKit-Browsern (Chrome, Edge, Safari) */
+    -webkit-text-stroke: 2px black; /* Für bessere Kompatibilität */
+    text-shadow:
+            -2px -2px 0 black,
+            2px -2px 0 black,
+            -2px  2px 0 black,
+            2px  2px 0 black;
+    white-space: nowrap;
+  }
+
+
+
+
+
+
+  /* Logo styling */
+  #header-logo {
+    width: 60px; /* Adjust size as needed */
+    height: 60px;
+    border-radius: 50%; /* Makes it round */
+    object-fit: cover;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Title styling */
+  #header-title {
+    font-size: 2.2rem;
+    font-weight: bold;
+    font-family: 'Arial', sans-serif;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+    white-space: nowrap;
+  }
 </style>
 
-<div id="scroll-buttons" class="scroll-buttons">
+<div id="scroll-buttons">
   <button id="scroll-top" class="btn btn-primary">
-    <img src="http://localhost:8080/icons/world-map.png" alt="Nach oben" width="20" height="20">
+    <img id="icon-top" alt="Nach oben" width="20" height="20">
+  </button>
+  <button id="scroll-gallery" class="btn btn-primary">
+    <img id="icon-content" alt="Zu Content" width="20" height="20">
   </button>
   <button id="scroll-content" class="btn btn-primary">
-    <img src="http://localhost:8080/icons/checkpoint.png" alt="Zu Content" width="20" height="20">
+    <img id="icon-iframe" alt="Zum iFrame" width="20" height="20">
   </button>
-  <button id="scroll-iframe" class="btn btn-primary">
-    <img src="http://localhost:8080/icons/album.png" alt="Zum iFrame" width="20" height="20">
-  </button>
+</div>
+
+
+
 
 </div>
 
 
-<h1 class="my-4">Pixels Around The World</h1>
+<!-- Header Section -->
+<div id="header-container">
+  <img id="header-logo" alt="Logo">
+  <h1 id="header-title">Pixels Around the World</h1>
+</div>
+
 <world-steps id="travel-map"></world-steps>
 
 
@@ -76,25 +143,81 @@
 
 <script>
 
+  function adjustHeaderWidth() {
+    const travelMap = document.getElementById('travel-map');
+    const headerContainer = document.getElementById('header-container');
+
+    if (travelMap && headerContainer) {
+      const updateWidth = () => {
+        const mapWidth = travelMap.getBoundingClientRect().width;
+        if (mapWidth > 0) {
+          headerContainer.style.width = `${mapWidth}px`;
+        }
+      };
+
+      updateWidth(); // Direkt beim ersten Aufruf setzen
+
+      // Verzögerung für spätere korrekte Berechnung (falls nötig)
+      setTimeout(updateWidth, 200);
+
+      // Event-Listener für spätere Anpassungen
+      window.addEventListener('resize', updateWidth);
+    }
+  }
+
+  // Direkt nach dem Laden und wenn die Map-Funktion verfügbar ist
+  window.addEventListener('load', adjustHeaderWidth);
+  window.addEventListener('DOMContentLoaded', adjustHeaderWidth);
+
+
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const domain = window.location.origin; // Holt automatisch die aktuelle Domain
+    document.getElementById('header-logo').src = `${domain}/icons/logo.jpg`;
+  });
+
+
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const domain = window.location.origin; // Automatically gets the current domain
+
+    document.getElementById('icon-top').src = `${domain}/icons/world-map.png`;
+    document.getElementById('icon-content').src = `${domain}/icons/checkpoint.png`;
+    document.getElementById('icon-iframe').src = `${domain}/icons/album.png`;
+  });
+
+
 
   // Scroll-Buttons Funktionen
   document.getElementById('scroll-top').addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
-  document.getElementById('scroll-content').addEventListener('click', () => {
-    const stopInfo = document.getElementById('stop-info');
-    if (stopInfo) {
-      stopInfo.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.getElementById('scroll-gallery').addEventListener('click', () => {
+    const worldSteps = document.querySelector('world-steps');
+
+    if (worldSteps) {
+      const stopTitle = worldSteps.shadowRoot?.querySelector('#stop-title');
+
+      if (stopTitle) {
+        stopTitle.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        console.error("Element #stop-title nicht gefunden!");
+      }
+    } else {
+      console.error("world-steps Element nicht gefunden!");
     }
   });
 
-  document.getElementById('scroll-iframe').addEventListener('click', () => {
+  document.getElementById('scroll-content').addEventListener('click', () => {
     const gallery = document.getElementById('gallery');
+    console.log(gallery)
     if (gallery) {
       gallery.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   });
+
+
 
 
 
