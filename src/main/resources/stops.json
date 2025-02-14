@@ -36,5 +36,54 @@
   { "name": "Raiatea", "coords": [-16.7134, -152.4344], "description": "Raiatea, eine Insel der Gesellschaftsinseln, bekannt für ihre polynesische Geschichte und das Tempelgebiet Taputapuātea.", "folder": "34_Raiatea", "preview": "previews/Raiatea.jpg", "region": 3 },
   { "name": "Bora Bora", "coords": [-16.5000, -151.7415], "description": "Bora Bora, berühmt für ihre türkisfarbenen Lagunen und luxuriösen Überwasserbungalows.", "folder": "35_BoraBora", "preview": "previews/BoraBora.jpg", "region": 3 },
   { "name": "Moorea", "coords": [-17.5296, -149.8327], "description": "Moorea, eine Insel mit spektakulären Berglandschaften, Stränden und Tauchplätzen.", "folder": "36_Moorea", "preview": "previews/Moorea.jpg", "region": 3 },
-  { "name": "Tahiti", "coords": [-17.6509, -149.4260], "description": "Tahiti, die größte Insel Französisch-Polynesiens, bekannt für ihre Märkte, Strände und das kulturelle Erbe.", "folder": "37_Tahiti", "preview": "previews/Tahiti.jpg", "region": 3 }
+  { "name": "Tahiti", "coords": [-17.6509, -149.4260], "description": "Tahiti, die größte Insel Französisch-Polynesiens, bekannt für ihre Märkte, Strände und das kulturelle Erbe.", "folder": "37_Tahiti", "preview": "previews/Tahiti.jpg", "region": 3 },
+  {
+    "name": "Auckland",
+    "coords": [-36.8485, 174.7633],
+    "description": "Die größte Stadt Neuseelands mit dem Sky Tower und wunderschöner Hafenlandschaft.",
+    "folder": "38_Auckland",
+    "preview": "previews/Auckland.jpg",
+    "region": 3
+  },
+  {
+    "name": "Cathedral Cove",
+    "coords": [-36.8278, 175.7902],
+    "description": "Ein atemberaubender Strand mit natürlichen Felsbögen und türkisfarbenem Wasser.",
+    "folder": "39_CathedralCove",
+    "preview": "previews/CathedralCove.jpg",
+    "region": 3
+  },
+  {
+    "name": "Hobbiton",
+    "coords": [-37.8722, 175.6825],
+    "description": "Das berühmte Filmset aus 'Der Herr der Ringe' und 'Der Hobbit', ein Muss für Fans.",
+    "folder": "40_Hobbiton",
+    "preview": "previews/Hobbiton.jpg",
+    "region": 3
+  },
+  {
+    "name": "Rotorua",
+    "coords": [-38.1368, 176.2497],
+    "description": "Rotorua, eine Stadt voller geothermischer Wunder und reicher Māori-Kultur.",
+    "folder": "42_Rotorua",
+    "preview": "previews/Rotorua.jpg",
+    "region": 3
+  },
+  {
+    "name": "Tongariro National Park",
+    "coords": [-39.2904, 175.5626],
+    "description": "Der Tongariro National Park, bekannt für seine dramatische Vulkanlandschaft und den Tongariro Alpine Crossing.",
+    "folder": "41_Tongariro",
+    "preview": "previews/Tongariro.jpg",
+    "region": 3
+  },
+
+  {
+    "name": "Mount Taranaki",
+    "coords": [-39.2968, 174.0632],
+    "description": "Mount Taranaki, ein majestätischer Vulkan auf der Nordinsel Neuseelands, ideal für Wanderer und Naturliebhaber.",
+    "folder": "43_Taranaki",
+    "preview": "previews/Taranaki.jpg",
+    "region": 3
+  }
 ]

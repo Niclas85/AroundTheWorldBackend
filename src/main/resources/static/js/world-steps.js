@@ -102,41 +102,86 @@ class WorldSteps extends HTMLElement {
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* --- Titel-Box --- */
+
 #stop-title {
-  font-size: 1.8rem;
-  font-weight: bold;
+  width: 100%;
+  background-color: #e3f2fd; /* Hellblauer Hintergrund */
   text-align: center;
-  padding: 15px;
-  background: linear-gradient(90deg, #0056b3, #007bff);
-  color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease-in-out;
+  font-size: 2.2rem;
+  font-family: 'Arial', sans-serif;
+  color: black;
+
+
 }
 
-#stop-title:hover {
-  transform: scale(1.05);
-}
-
-/* --- Beschreibung-Box --- */
+/* Styling für den Beschreibungstext */
 #stop-description {
   font-size: 1.1rem;
-  line-height: 1.6;
-  padding: 15px;
-  background: white;
-  color: #6c757d;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  margin-top: 10px;
-  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  font-family: 'Arial', sans-serif;
+  color: #333; /* Dunkleres Grau für bessere Lesbarkeit */
+
+
 }
 
-#stop-description:hover {
-  transform: scale(1.02);
-  opacity: 0.9;
+/* Entfernen der Linie zwischen der Karte und dem Stop-Titel */
+#header-container {
+  border: none;
+  box-shadow: none;
+  margin-bottom: 0;
 }
 
+
+
+#content {
+    width: 100%;
+    max-width: inherit; /* Erbt die Breite von #travel-map */
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column; /* Falls Inhalt gestapelt wird */
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 15px;
+    background-color: #e3f2fd; /* 🌟 Sehr helles Blau */
+    color: black;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: width 0.3s ease-in-out;
+}
+
+/* ✨ Abstand zur Map */
+#content {
+    margin-bottom: 10px; /* 10px Abstand nach unten */
+}
+
+/* Titel-Styling */
+#stop-title {
+    font-size: 2.2rem;
+    font-weight: bold;
+    font-family: 'Arial', sans-serif;
+    color: #d9d9d9; /* Weißgrau */
+
+    -webkit-text-stroke: 2px black; /* Für bessere Kompatibilität */
+    text-shadow:
+            -2px -2px 0 lightgrey,
+            2px -2px 0 lightgrey,
+            -2px  2px 0 lightgrey,
+            2px  2px 0 lightgrey
+    white-space: nowrap;
+}
+
+/* Beschreibung-Styling */
+#stop-description {
+    font-size: 1.2rem;
+    color: #d9d9d9; /* Weißgrau */
+    -webkit-text-stroke: 1px black;
+    text-shadow:
+        -1px -1px 0 lightgrey,
+        1px -1px 0 lightgrey,
+        -1px  1px 0 lightgrey,
+        1px  1px 0 lightgrey
+    text-align: center;
+}
 
 
         
