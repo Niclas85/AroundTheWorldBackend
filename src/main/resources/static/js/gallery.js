@@ -93,6 +93,7 @@ class Custom360Viewer extends HTMLElement {
     }
   }
 
+
   init3DView(mediaPath) {
     const container = this.shadowRoot.getElementById('renderer-container');
 
@@ -174,51 +175,36 @@ class Custom360Viewer extends HTMLElement {
   setupFlatView(mediaPath) {
     const container = this.shadowRoot.getElementById('renderer-container');
     container.innerHTML = ''; // Clear previous content
+    container.style.position = 'relative';
+    container.style.overflow = 'hidden';
 
     const isVideo = mediaPath.endsWith('.mp4') || mediaPath.endsWith('.webm');
 
-    const scaleFactor = 1.1;  // How much to zoom per scroll event (can be adjusted)
-
-    const zoomIn = () => {
-      if (isVideo || container.querySelector('img')) {
-        container.style.transform = `scale(${parseFloat(container.style.transform.slice(6)) * scaleFactor || 1})`;
-      }
-    };
-
-    const zoomOut = () => {
-      if (isVideo || container.querySelector('img')) {
-        container.style.transform = `scale(${parseFloat(container.style.transform.slice(6)) / scaleFactor || 1})`;
-      }
-    };
-
-    // Mousewheel event listener for zoom
-    container.addEventListener('wheel', (event) => {
-      if (event.deltaY < 0) {
-        zoomIn(); // Zoom in on scroll up
-      } else {
-        zoomOut(); // Zoom out on scroll down
-      }
-    });
+    const mediaElement = isVideo ? document.createElement('video') : document.createElement('img');
+    mediaElement.src = mediaPath;
+    mediaElement.style.position = 'absolute';
+    mediaElement.style.width = '100%';
+    mediaElement.style.height = '100%';
+    mediaElement.style.objectFit = 'contain';
+    mediaElement.style.transform = 'translate(0, 0) scale(1)';
+    mediaElement.style.cursor = 'grab';
+    mediaElement.draggable = false;
 
     if (isVideo) {
-      const video = document.createElement('video');
-      video.src = mediaPath;
-      video.style.width = '100%';
-      video.style.height = '100%';
-      video.style.objectFit = 'contain';
-      container.appendChild(video);
-      video.play();
-    } else {
-      const img = document.createElement('img');
-      img.src = mediaPath;
-      img.alt = 'Bild';
-      img.style.width = '100%';
-      img.style.height = '100%';
-      img.style.objectFit = 'contain';
-      container.appendChild(img);
+      mediaElement.loop = true;
+      mediaElement.muted = true;
+      mediaElement.play();
     }
-  }
 
+    container.appendChild(mediaElement);
+
+    this.currentZoom = 1;
+    this.currentX = 0;
+    this.currentY = 0;
+    this.mediaElement = mediaElement;
+
+    this.setupFlatViewControls();
+  }
 
   updateRendererSize(container) {
     const width = container.clientWidth || window.innerWidth;
