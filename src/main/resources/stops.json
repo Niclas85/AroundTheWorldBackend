@@ -85,5 +85,31 @@
     "folder": "43_Taranaki",
     "preview": "previews/Taranaki.jpg",
     "region": 3
-  }
+  },
+
+    {
+      "name": "Wellington",
+      "coords": [-41.2865, 174.7762],
+      "description": "Wellington, die Hauptstadt Neuseelands, bekannt für das Te Papa Museum und ihre lebendige Kunst- und Kulturszene.",
+      "folder": "44_Wellington",
+      "preview": "previews/Wellington.jpg",
+      "region": 3
+    },
+    {
+      "name": "Abel Tasman National Park",
+      "coords": [-40.8333, 172.9000],
+      "description": "Abel Tasman National Park, berühmt für seine goldenen Strände, kristallklares Wasser und malerische Wanderwege.",
+      "folder": "45_AbelTasman",
+      "preview": "previews/AbelTasman.jpg",
+      "region": 3
+    },
+    {
+      "name": "Glenorchy",
+      "coords": [-44.8535, 168.3825],
+      "description": "Glenorchy, ein malerisches Dorf am Lake Wakatipu, umgeben von majestätischen Bergen und Drehort von Herr der Ringe.",
+      "folder": "46_Glenorchy",
+      "preview": "previews/Glenorchy.jpg",
+      "region": 3
+    }
+
 ]

@@ -47,6 +47,46 @@ class Custom360Viewer extends HTMLElement {
   scroll-behavior: smooth; /* Macht das Scrollen weicher */
 }
 
+          .download-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            padding: 10px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+            background-color: #28a745;
+            color: white;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+          }
+          .download-btn:hover {
+            background-color: #218838;
+          }
+          
+          .rotate-indicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 40px;
+  color: white;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 15px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeInOut 2s infinite alternate;
+}
+@keyframes fadeInOut {
+  from { opacity: 1; }
+  to { opacity: 0.5; }
+}
+
+
         </style>
         <div id="renderer-container"></div>
         <div class="controls">
@@ -58,6 +98,8 @@ class Custom360Viewer extends HTMLElement {
           <button id="rotateDown">Rotate Down</button>
           <button id="reset">Reset View</button>
         </div>
+        <button id="download" class="download-btn">Download</button>
+        <div id="rotate-indicator" class="rotate-indicator">↻</div>
       `;
   }
 
@@ -82,7 +124,10 @@ class Custom360Viewer extends HTMLElement {
     const container = this.shadowRoot.getElementById('renderer-container');
     container.innerHTML = ''; // Clear previous content
 
+
+
     if (this.panorama3D) {
+      this.setupRotationIndicator();
       if (isVideo) {
         this.initVideo3D(mediaPath);
       } else {
@@ -253,15 +298,18 @@ class Custom360Viewer extends HTMLElement {
     this.shadowRoot.getElementById('zoomIn').addEventListener('click', () => {
       this.camera.zoom *= 1.1;
       this.camera.updateProjectionMatrix();
+      this.hideRotationIndicator();
     });
 
     this.shadowRoot.getElementById('zoomOut').addEventListener('click', () => {
       this.camera.zoom /= 1.1;
       this.camera.updateProjectionMatrix();
+      this.hideRotationIndicator();
     });
 
     this.shadowRoot.getElementById('rotateLeft').addEventListener('click', () => {
       this.rotateCameraHorizontal(Math.PI / 8);
+      this.hideRotationIndicator();
     });
 
     this.shadowRoot.getElementById('rotateRight').addEventListener('click', () => {
@@ -270,15 +318,23 @@ class Custom360Viewer extends HTMLElement {
 
     this.shadowRoot.getElementById('rotateUp').addEventListener('click', () => {
       this.rotateCameraVertical(Math.PI / 8);
+      this.hideRotationIndicator();
     });
 
     this.shadowRoot.getElementById('rotateDown').addEventListener('click', () => {
       this.rotateCameraVertical(-Math.PI / 8);
+      this.hideRotationIndicator();
     });
 
     this.shadowRoot.getElementById('reset').addEventListener('click', () => {
       this.controls.reset();
+      this.hideRotationIndicator();
     });
+    this.shadowRoot.getElementById('download').addEventListener('click', () => {
+      this.downloadMedia();
+      this.hideRotationIndicator();
+    });
+
   }
   setPanorama3D(value) {
     this.panorama3D = value;
@@ -339,9 +395,46 @@ class Custom360Viewer extends HTMLElement {
     mediaElement.style.transform = `translate(${this.currentX}px, ${this.currentY}px) scale(${this.currentZoom})`;
   }
 
+
+  downloadMedia() {
+    if (!this.mediaPath) return;
+
+    const a = document.createElement('a');
+    a.href = this.mediaPath;
+    a.download = this.mediaPath.split('/').pop(); // Datei aus URL extrahieren
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+
+
+  setupRotationIndicator() {
+    const indicator = this.shadowRoot.getElementById('rotate-indicator');
+
+    const hideIndicator = () => {
+      if (indicator) {
+        indicator.style.display = 'none';
+        window.removeEventListener('mousemove', hideIndicator);
+        window.removeEventListener('touchstart', hideIndicator);
+      }
+    };
+
+    window.addEventListener('mousemove', hideIndicator, { once: true });
+    window.addEventListener('touchstart', hideIndicator, { once: true });
+  }
+
+
+  setupRotationIndicator() {
+    const hide = this.hideRotationIndicator.bind(this);
+    window.addEventListener('mousemove', hide, { once: true });
+    window.addEventListener('touchstart', hide, { once: true });
+  }
+
 }
 
 customElements.define('custom-360-viewer', Custom360Viewer);
+
 
 
 
