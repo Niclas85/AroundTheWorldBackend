@@ -99,7 +99,8 @@ class Custom360Viewer extends HTMLElement {
           <button id="reset">Reset View</button>
         </div>
         <button id="download" class="download-btn">Download</button>
-        <div id="rotate-indicator" class="rotate-indicator">↻</div>
+    <div id="rotate-indicator" class="rotate-indicator" style="display: none;">↻</div>
+
       `;
   }
 
@@ -115,6 +116,7 @@ class Custom360Viewer extends HTMLElement {
   }
 
   init() {
+
     this.loadMedia(this.mediaPath);
     this.setupButtons();
   }
@@ -126,15 +128,25 @@ class Custom360Viewer extends HTMLElement {
 
 
 
+
+
     if (this.panorama3D) {
-      this.setupRotationIndicator();
+      this.showRotationIndicator()
+
+
+
+
       if (isVideo) {
         this.initVideo3D(mediaPath);
       } else {
         this.init3DView(mediaPath);
       }
+     // console.log(document.querySelector('custom-360-viewer').shadowRoot.getElementById('rotate-indicator'));
+
     } else {
       this.setupFlatView(mediaPath);
+      // Verstecke den Rotation-Indicator für nicht-Panoramen
+      this.hideRotationIndicator();
     }
   }
 
@@ -146,6 +158,15 @@ class Custom360Viewer extends HTMLElement {
     this.camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
     this.renderer = new THREE.WebGLRenderer();
     container.appendChild(this.renderer.domElement);
+
+
+
+    this.showRotationIndicator()
+
+    // Event-Listener für Mausklick hinzufügen
+    container.addEventListener('pointerdown', () => {
+      this.hideRotationIndicator();
+    });
 
     this.updateRendererSize(container);
     this.camera.position.set(0, 0, 0.1);
@@ -175,6 +196,7 @@ class Custom360Viewer extends HTMLElement {
     window.addEventListener('resize', () => this.updateRendererSize(container), false);
   }
 
+
   initVideo3D(mediaPath) {
     const container = this.shadowRoot.getElementById('renderer-container');
 
@@ -184,6 +206,18 @@ class Custom360Viewer extends HTMLElement {
     container.appendChild(this.renderer.domElement);
 
     this.updateRendererSize(container);
+
+    // Rotation-Indicator sichtbar machen
+    this.showRotationIndicator()
+
+
+
+    // **Hier den Event-Listener für Mausklick hinzufügen**
+    container.addEventListener('pointerdown', () => {
+      this.hideRotationIndicator();
+    });
+
+
     this.camera.position.set(0, 0, 0.1);
 
     const video = document.createElement('video');
@@ -295,10 +329,11 @@ class Custom360Viewer extends HTMLElement {
   }
 
   setupButtons() {
+
     this.shadowRoot.getElementById('zoomIn').addEventListener('click', () => {
       this.camera.zoom *= 1.1;
       this.camera.updateProjectionMatrix();
-      this.hideRotationIndicator();
+      this.hideRotationIndicator(); // Indikator ausblenden
     });
 
     this.shadowRoot.getElementById('zoomOut').addEventListener('click', () => {
@@ -314,6 +349,7 @@ class Custom360Viewer extends HTMLElement {
 
     this.shadowRoot.getElementById('rotateRight').addEventListener('click', () => {
       this.rotateCameraHorizontal(-Math.PI / 8);
+      this.hideRotationIndicator();
     });
 
     this.shadowRoot.getElementById('rotateUp').addEventListener('click', () => {
@@ -332,7 +368,7 @@ class Custom360Viewer extends HTMLElement {
     });
     this.shadowRoot.getElementById('download').addEventListener('click', () => {
       this.downloadMedia();
-      this.hideRotationIndicator();
+
     });
 
   }
@@ -409,27 +445,26 @@ class Custom360Viewer extends HTMLElement {
 
 
 
-  setupRotationIndicator() {
+
+
+  showRotationIndicator() {
     const indicator = this.shadowRoot.getElementById('rotate-indicator');
-
-    const hideIndicator = () => {
-      if (indicator) {
-        indicator.style.display = 'none';
-        window.removeEventListener('mousemove', hideIndicator);
-        window.removeEventListener('touchstart', hideIndicator);
-      }
-    };
-
-    window.addEventListener('mousemove', hideIndicator, { once: true });
-    window.addEventListener('touchstart', hideIndicator, { once: true });
+    if (indicator) {
+      indicator.style.display = 'flex'; // Anzeigen
+    }
   }
 
 
-  setupRotationIndicator() {
-    const hide = this.hideRotationIndicator.bind(this);
-    window.addEventListener('mousemove', hide, { once: true });
-    window.addEventListener('touchstart', hide, { once: true });
+  hideRotationIndicator() {
+    const indicator = this.shadowRoot.getElementById('rotate-indicator');
+    if (indicator) {
+      indicator.style.display = 'none'; // Verstecken
+    }
   }
+
+
+
+
 
 }
 
@@ -629,6 +664,10 @@ class GalleryComponent extends HTMLElement {
     viewer.changeMedia(item.src);
     viewer.setPanorama3D(item.panorama)
   }
+
+
+
+
 }
 
 customElements.define('gallery-component', GalleryComponent);
