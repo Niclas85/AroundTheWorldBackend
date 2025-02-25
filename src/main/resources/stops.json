@@ -110,6 +110,22 @@
       "folder": "46_Glenorchy",
       "preview": "previews/Glenorchy.jpg",
       "region": 3
-    }
+    },
+  {
+    "name": "Milford Sound",
+    "coords": [-44.6704, 167.9246],
+    "description": "Milford Sound, ein atemberaubender Fjord im Fiordland-Nationalpark, bekannt für seine spektakulären Wasserfälle und steilen Klippen.",
+    "folder": "47_MilfordSound",
+    "preview": "previews/MilfordSound.jpg",
+    "region": 3
+  },
+  {
+    "name": "Mount Cook",
+    "coords": [-43.5950, 170.1419],
+    "description": "Mount Cook, der höchste Berg Neuseelands, umgeben von Gletschern und alpinen Landschaften.",
+    "folder": "48_MountCook",
+    "preview": "previews/MountCook.jpg",
+    "region": 3
+  }
 
 ]
