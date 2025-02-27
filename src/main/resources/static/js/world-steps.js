@@ -28,14 +28,24 @@ class WorldSteps extends HTMLElement {
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
       <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
       <style>
-        #map {
+           .map-container {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
+        }
+        
+             #map {
+          flex: 1;
+          min-width: 300px;
           height: 500px;
           border: 1px solid #ccc;
         }
         #steps-buttons {
           display: flex;
-          gap: 20px;
-          margin-left: 20px;
+          flex-wrap: wrap;
+          gap: 10px;
+          justify-content: center;
+                    min-width: 300px;
         }
         .steps-buttons-region {
           display: flex;
@@ -51,6 +61,8 @@ class WorldSteps extends HTMLElement {
           overflow: hidden;
           white-space: nowrap;
         }
+
+        
         .btn:hover, .leaflet-marker-icon:hover {
           transform: scale(1.1);
           background-color: #0056b3;
@@ -187,13 +199,15 @@ class WorldSteps extends HTMLElement {
         
       </style>
 
-
-
       <div class="container">
-        <div class="d-flex">
-          <div id="map" style="flex: 1;"></div>
+        <div class="map-container">
+          <div id="map"></div>
           <div id="steps-buttons"></div>
         </div>
+      </div>
+
+
+
  <div id="content" class="p-3 bg-light rounded shadow-sm">
   <h2 id="stop-title" class="text-primary"></h2>
   <hr />
