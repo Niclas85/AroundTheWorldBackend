@@ -39,7 +39,7 @@
   { "name": "Tahiti", "coords": [-17.6509, -149.4260], "description": "Tahiti, die größte Insel Französisch-Polynesiens, bekannt für ihre Märkte, Strände und das kulturelle Erbe.", "folder": "37_Tahiti", "preview": "previews/Tahiti.jpg", "region": 3 },
   {
     "name": "Auckland",
-    "coords": [-36.8485, 174.7633],
+    "coords": [-36.8485, -185.2367],
     "description": "Die größte Stadt Neuseelands mit dem Sky Tower und wunderschöner Hafenlandschaft.",
     "folder": "38_Auckland",
     "preview": "previews/Auckland.jpg",
@@ -126,6 +126,24 @@
     "folder": "48_MountCook",
     "preview": "previews/MountCook.jpg",
     "region": 3
+  },
+  {
+    "name": "Rakaia Gorge",
+    "coords": [-43.5036, 171.4941],
+    "description": "Rakaia Gorge, eine atemberaubende Schlucht mit türkisblauem Wasser und spektakulären Wanderwegen.",
+    "folder": "49_RakaiaGorge",
+    "preview": "previews/RakaiaGorge.jpg",
+    "region": 3
+  },
+  {
+    "name": "Christchurch",
+    "coords": [-43.5321, 172.6362],
+    "description": "Christchurch, die größte Stadt auf der Südinsel Neuseelands, bekannt für ihre Gärten, Straßenkunst und historische Architektur.",
+    "folder": "50_Christchurch",
+    "preview": "previews/Christchurch.jpg",
+    "region": 3
   }
+
+
 
 ]

@@ -475,6 +475,16 @@ customElements.define('custom-360-viewer', Custom360Viewer);
 
 
 
+
+
+
+
+
+
+
+
+
+
 class GalleryComponent extends HTMLElement {
   constructor() {
     super();

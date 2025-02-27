@@ -291,6 +291,9 @@ class WorldSteps extends HTMLElement {
 
       const regionStops = this.stops.filter(stop => stop.region === region);
       regionStops.forEach(stop => {
+        if (stop.name !== "Zürich" && stop.coords[1] > 0) {
+          stop.coords[1] -= 360;
+        }
         const marker = L.marker(stop.coords).addTo(this.map);
         marker.bindPopup(`<strong>${stop.name}</strong><br>${stop.description}`);
 
