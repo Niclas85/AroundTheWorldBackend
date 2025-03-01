@@ -142,7 +142,25 @@
     "folder": "50_Christchurch",
     "preview": "previews/Christchurch.jpg",
     "region": 3
+  },
+  {
+    "name": "Sydney",
+    "coords": [-33.8688, 151.2093],
+    "description": "Sydney, Australiens größte Stadt, berühmt für das Opernhaus, die Harbour Bridge und wunderschöne Strände.",
+    "folder": "51_Sydney",
+    "preview": "previews/Sydney.jpg",
+    "region": 4
+  },
+  {
+    "name": "Brisbane",
+    "coords": [-27.4698, 153.0251],
+    "description": "Brisbane, die Hauptstadt von Queensland, bietet eine lebendige Kulturszene, Flusspromenaden und tropisches Klima.",
+    "folder": "54_Brisbane",
+    "preview": "previews/Brisbane.jpg",
+    "region": 4
   }
+
+
 
 
 
