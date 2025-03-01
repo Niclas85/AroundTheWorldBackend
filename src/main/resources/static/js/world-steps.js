@@ -286,6 +286,11 @@ class WorldSteps extends HTMLElement {
     }
   }
 
+
+
+
+
+
   updateStopsOnMap() {
     if (!this.map) return;
 
@@ -316,7 +321,6 @@ class WorldSteps extends HTMLElement {
           this.updateContent(stop.name, stop.description);
         });
 
-
         // Hover-Events für Marker
         marker.addEventListener('mouseover', (e) => this.showPreview(e, stop));
         marker.addEventListener('mouseout', () => this.hidePreview());
@@ -326,44 +330,58 @@ class WorldSteps extends HTMLElement {
         const button = document.createElement('button');
         button.className = 'btn btn-primary';
         button.textContent = stop.name;
-        button.addEventListener('click', () => {
-          this.map.setView(stop.coords, 10);
-        });
-
-        // Klick-Event für Button
-        button.addEventListener('click', () => {
-          this.updateContent(stop.name, stop.description);
-        });
-
-
-
-        // Hover-Events für Button
-        button.addEventListener('mouseover', (e) => this.showPreview(e, stop));
-        button.addEventListener('mouseout', () => this.hidePreview());
-
-
 
         button.onclick = () => {
-          this.map.setView(stop.coords, 10);
+          if (this.lastStop) {
+            const prevCoords = this.lastStop.coords;
+            const nextCoords = stop.coords;
+
+            // Calculate midpoint between previous and next stop
+            const midLat = (prevCoords[0] + nextCoords[0]) / 2;
+            const midLng = (prevCoords[1] + nextCoords[1]) / 2;
+            const midPoint = [midLat, midLng];
+
+            // 1. Zoom out to the midpoint
+            this.map.flyTo(midPoint, 3, { duration: 1.5 });
+
+            // 2. Delay, then zoom to next stop
+            setTimeout(() => {
+              this.map.flyTo(nextCoords, 10, { duration: 1.5 });
+
+              // 3. Ensure next stop is perfectly centered
+              setTimeout(() => {
+                this.map.panTo(nextCoords);
+              }, 1800);
+            }, 1800);
+          } else {
+            // If no previous stop, go directly to next stop
+            this.map.flyTo(stop.coords, 10, { duration: 1.5 });
+
+            setTimeout(() => {
+              this.map.panTo(stop.coords);
+            }, 1800);
+          }
+
+          this.lastStop = stop; // Save last stop
+
           this.updateContent(stop.name, stop.description);
 
-          // Benutzerdefiniertes Event auslösen
+          // Dispatch event for stop selection
           this.dispatchEvent(
-            new CustomEvent('stopClicked', {
-              detail: {
-                name: stop.name,
-                description: stop.description,
-                coords: stop.coords,
-                folder: stop.folder,
-              },
-              bubbles: true,
-              composed: true,
-            })
+              new CustomEvent('stopClicked', {
+                detail: {
+                  name: stop.name,
+                  description: stop.description,
+                  coords: stop.coords,
+                  folder: stop.folder,
+                },
+                bubbles: true,
+                composed: true,
+              })
           );
         };
 
         regionDiv.appendChild(button);
-
         stopCoords.push(stop.coords);
       });
     });
@@ -375,6 +393,8 @@ class WorldSteps extends HTMLElement {
       this.map.fitBounds(L.latLngBounds(stopCoords));
     }
   }
+
+
 
 
 
@@ -397,6 +417,11 @@ class WorldSteps extends HTMLElement {
       descriptionElement.style.opacity = '1';
     }, 200); // Verzögerung in Millisekunden
   }
+
+
+
+
+
 
 
 
