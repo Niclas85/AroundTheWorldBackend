@@ -247,6 +247,7 @@ class WorldSteps extends HTMLElement {
   showPreview(event, stop) {
     const preview = this.preview;
 
+
     // Prüfe, ob es sich um ein Leaflet-Event (Marker) oder ein normales MouseEvent handelt
     const mouseEvent = event.originalEvent || event;
 
@@ -321,6 +322,7 @@ class WorldSteps extends HTMLElement {
           this.updateContent(stop.name, stop.description);
         });
 
+
         // Hover-Events für Marker
         marker.addEventListener('mouseover', (e) => this.showPreview(e, stop));
         marker.addEventListener('mouseout', () => this.hidePreview());
@@ -330,6 +332,9 @@ class WorldSteps extends HTMLElement {
         const button = document.createElement('button');
         button.className = 'btn btn-primary';
         button.textContent = stop.name;
+
+        button.addEventListener('mouseover', (e) => this.showPreview(e, stop));
+        button.addEventListener('mouseout', () => this.hidePreview());
 
         button.onclick = () => {
           if (this.lastStop) {
