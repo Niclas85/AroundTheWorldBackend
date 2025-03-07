@@ -10,6 +10,10 @@ public class Stop {
     private String preview;
     private int region;
 
+
+
+    private List<String> order;
+
     // Getter und Setter
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
@@ -28,4 +32,16 @@ public class Stop {
 
     public int getRegion() { return region; }
     public void setRegion(int region) { this.region = region; }
+
+
+    public List<String> getOrder() {
+        return order;
+    }
+
+    public void setOrder(List<String> order) {
+        this.order = order;
+    }
+
+
+
 }

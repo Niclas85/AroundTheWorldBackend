@@ -1,42 +1,78 @@
 [
 
   { "name": "Zürich", "coords": [47.3769, 8.5417], "description": "Beschreibung zu Zürich.", "folder": "01_Zuerich", "preview": "previews/Zuerich.jpg", "region": 1 },
-  { "name": "Cusco", "coords": [-13.532, -71.9675], "description": "Cusco, die historische Hauptstadt des Inkareichs, ist bekannt für ihre Architektur, die eine Mischung aus Inka- und kolonialer Architektur darstellt.", "folder": "02_Cusco", "preview": "previews/Cusco.jpg", "region": 1 },
-  { "name": "Aguas Caliente", "coords": [-13.1589, -72.5349], "description": "Aguas Caliente ist ein kleines, aber beliebtes Dorf am Fuß von Machu Picchu, bekannt für seine heißen Quellen.", "folder": "03_AguasCaliente", "preview": "previews/AguasCaliente.jpg", "region": 1 },
-  { "name": "Vincunca", "coords": [-13.3653, -71.4413], "description": "Vincunca, auch als Regenbogenberg bekannt, ist ein beeindruckendes Naturwunder.", "folder": "04_Vincunca", "preview": "previews/Vincunca.jpg", "region": 1 },
-  { "name": "Titicacasee", "coords": [-15.7654, -69.531], "description": "Der Titicacasee, der höchstgelegene schiffbare See der Welt.", "folder": "05_Titikakasee", "preview": "previews/Titicacasee.jpg", "region": 1 },
-  { "name": "La Paz", "coords": [-16.4897, -68.1193], "description": "La Paz, die höchstgelegene Hauptstadt der Welt.", "folder": "06_LaPaz", "preview": "previews/LaPaz.jpg", "region": 1 },
-  { "name": "Death Road", "coords": [-16.2225, -68.5613], "description": "Die 'Death Road' ist bekannt als eine der gefährlichsten Straßen der Welt.", "folder": "07_DeathRoad", "preview": "previews/DeathRoad.jpg", "region": 1 },
-  { "name": "Pico Austria", "coords": [-16.2548, -68.1435], "description": "Pico Austria ist ein beeindruckender Berg, ideal für Wanderer.", "folder": "08_PicoAustria", "preview": "previews/PicoAustria.jpg", "region": 1 },
-  { "name": "Arica", "coords": [-18.475, -70.3155], "description": "Arica ist bekannt für seine Strände und die archäologischen Stätten.", "folder": "09_Arica", "preview": "previews/Arica.jpg", "region": 1 },
-  { "name": "Piedras Rojas", "coords": [-23.4121, -68.1355], "description": "Piedras Rojas ist bekannt für seine rot gefärbten Steine.", "folder": "10_PiedrasRojas", "preview": "previews/PiedrasRojas.jpg", "region": 1 },
-  { "name": "San Pedro", "coords": [-22.9076, -68.1994], "description": "San Pedro de Atacama ist ein charmantes Wüstenstädtchen.", "folder": "11_SanPedro", "preview": "previews/SanPedro.jpg", "region": 1 },
-  { "name": "Villa Mar", "coords": [-21.4264, -67.588], "description": "Villa Mar, ein malerisches Dorf in Bolivien, bekannt für seine Nähe zur Wüste und beeindruckenden Landschaften.", "folder": "12_VillaMar", "preview": "previews/VillaMar.jpg", "region": 1 },
-  { "name": "Uyuni", "coords": [-20.4575, -66.847], "description": "Der Salar de Uyuni, die größte Salzfläche der Welt.", "folder": "13_Uyuni", "preview": "previews/Uyuni.jpg", "region": 1 },
-  { "name": "Salta", "coords": [-24.7821, -65.4232], "description": "Salta, bekannt für koloniale Architektur und die Andenlandschaft.", "folder": "14_Salta", "preview": "previews/Salta.jpg", "region": 1 },
-  { "name": "Corrientes", "coords": [-27.4716, -58.8396], "description": "Corrientes, eine Stadt am Paraná-Fluss mit einzigartiger Kultur.", "folder": "15_Corrientes", "preview": "previews/Corrientes.jpg", "region": 1 },
-  { "name": "Puerto Iguazú", "coords": [-25.5972, -54.5782], "description": "Puerto Iguazú, Tor zu den weltberühmten Iguazú-Wasserfällen.", "folder": "16_PuertoIguazu", "preview": "previews/PuertoIguazu.jpg", "region": 1 },
-  { "name": "Florianópolis", "coords": [-27.5954, -48.548], "description": "Florianópolis, eine brasilianische Inselstadt bekannt für Strände und Surfen.", "folder": "17_Florianopolis", "preview": "previews/Florianopolis.jpg", "region": 1 },
-  { "name": "Montevideo", "coords": [-34.9011, -56.1645], "description": "Montevideo, die Hauptstadt Uruguays, bekannt für ihre Uferpromenade und Geschichte.", "folder": "18_Montevideo", "preview": "previews/Montevideo.jpg", "region": 1 },
-  { "name": "Colonia del Sacramento", "coords": [-34.4717, -57.848], "description": "Colonia del Sacramento, eine charmante koloniale Stadt in Uruguay.", "folder": "19_ColoniaDelSacramento", "preview": "previews/ColoniaDelSacramento.jpg", "region": 1 },
-  { "name": "Buenos Aires", "coords": [-34.6037, -58.3816], "description": "Buenos Aires, die lebendige Hauptstadt Argentiniens, bekannt für Tango, Kultur und beeindruckende Architektur.", "folder": "20_BuenosAires", "preview": "previews/BuenosAires.jpg", "region": 1 },
-  { "name": "Las Vegas", "coords": [36.1699, -115.1398], "description": "Las Vegas, bekannt für ihre Kasinos, Shows und Unterhaltung.", "folder": "21_LasVegas", "preview": "previews/LasVegas.jpg", "region": 2 },
-  { "name": "Grand Canyon", "coords": [36.1069, -112.1129], "description": "Der Grand Canyon, eines der beeindruckendsten Naturwunder der Welt, bekannt für seine schiere Größe und Farbenpracht.", "folder": "22_GrandCanyon", "preview": "previews/GrandCanyon.jpg", "region": 2 },
-  { "name": "Monument Valley", "coords": [36.9986, -110.0986], "description": "Monument Valley, ein ikonisches Wüstengebiet mit markanten Sandsteinformationen.", "folder": "23_MonumentValley", "preview": "previews/MonumentValley.jpg", "region": 2 },
-  { "name": "Antelope Canyon", "coords": [36.8619, -111.3743], "description": "Antelope Canyon, bekannt für seine faszinierenden Sandsteinformationen und Lichtspiele.", "folder": "24_AntelopeCanyon", "preview": "previews/AntelopeCanyon.jpg", "region": 2 },
-  { "name": "Bryce Canyon", "coords": [37.593, -112.1871], "description": "Bryce Canyon, ein Nationalpark bekannt für seine Hoodoos, säulenartige Felsformationen.", "folder": "25_BryceCanyon", "preview": "previews/BryceCanyon.jpg", "region": 2 },
-  { "name": "Zion Nationalpark", "coords": [37.2982, -113.0263], "description": "Zion Nationalpark, bekannt für seine beeindruckenden Schluchten und Wanderwege.", "folder": "26_ZionNationalpark", "preview": "previews/ZionNationalpark.jpg", "region": 2 },
-  { "name": "Las Vegas Silvester", "coords": [36.1699, -115.1398], "description": "Las Vegas, bekannt für ihre Kasinos, Shows und Unterhaltung.", "folder": "27_LasVegas", "preview": "previews/LasVegasSilvester.jpg", "region": 2 },
-  { "name": "Death Valley", "coords": [36.5323, -116.9325], "description": "Death Valley, eine der heißesten Regionen der Welt, bekannt für seine einzigartigen Landschaften.", "folder": "28_DeathValley", "preview": "previews/DeathValley.jpg", "region": 2 },
-  { "name": "Red Rocks State Park", "coords": [34.9741, -118.2032], "description": "Red Rocks State Park, bekannt für seine leuchtend roten Felsformationen und Wanderwege.", "folder": "29_RedRocksStatePark", "preview": "previews/RedRocksStatePark.jpg", "region": 2 },
-  { "name": "Los Angeles", "coords": [34.0522, -118.2437], "description": "Los Angeles, die Stadt der Engel, bekannt für Hollywood, Strände und Unterhaltung.", "folder": "30_LosAngeles", "preview": "previews/LosAngeles.jpg", "region": 2 },
-  { "name": "Honolulu", "coords": [21.3069, -157.8583], "description": "Honolulu, die Hauptstadt Hawaiis, bekannt für Waikiki Beach und polynesische Kultur.", "folder": "31_Honolulu", "preview": "previews/Honolulu.jpg", "region": 2 },
-  { "name": "Big Island", "coords": [19.5429, -155.6659], "description": "Big Island, die größte Insel Hawaiis, bekannt für den aktiven Vulkan Kīlauea.", "folder": "32_BigIsland", "preview": "previews/BigIsland.jpg", "region": 2 },
-  { "name": "Volcano National Park", "coords": [19.4194, -155.2885], "description": "Volcano National Park on Big Island, known for its stunning lava landscapes and active volcanoes.", "folder": "33_VolcanoNationalPark", "preview": "previews/VolcanoNationalPark.jpg", "region": 2 },
-  { "name": "Raiatea", "coords": [-16.7134, -152.4344], "description": "Raiatea, eine Insel der Gesellschaftsinseln, bekannt für ihre polynesische Geschichte und das Tempelgebiet Taputapuātea.", "folder": "34_Raiatea", "preview": "previews/Raiatea.jpg", "region": 3 },
-  { "name": "Bora Bora", "coords": [-16.5000, -151.7415], "description": "Bora Bora, berühmt für ihre türkisfarbenen Lagunen und luxuriösen Überwasserbungalows.", "folder": "35_BoraBora", "preview": "previews/BoraBora.jpg", "region": 3 },
-  { "name": "Moorea", "coords": [-17.5296, -149.8327], "description": "Moorea, eine Insel mit spektakulären Berglandschaften, Stränden und Tauchplätzen.", "folder": "36_Moorea", "preview": "previews/Moorea.jpg", "region": 3 },
-  { "name": "Tahiti", "coords": [-17.6509, -149.4260], "description": "Tahiti, die größte Insel Französisch-Polynesiens, bekannt für ihre Märkte, Strände und das kulturelle Erbe.", "folder": "37_Tahiti", "preview": "previews/Tahiti.jpg", "region": 3 },
+  { "name": "Cusco", "coords": [-13.532, -71.9675], "description": "Cusco, die historische Hauptstadt des Inkareichs, ist bekannt für ihre Architektur, die eine Mischung aus Inka- und kolonialer Architektur darstellt.", "folder": "02_Cusco", "preview": "previews/Cusco.jpg", "region": 1,
+  "order": []  },
+  { "name": "Aguas Caliente", "coords": [-13.1589, -72.5349], "description": "Aguas Caliente ist ein kleines, aber beliebtes Dorf am Fuß von Machu Picchu, bekannt für seine heißen Quellen.", "folder": "03_AguasCaliente", "preview": "previews/AguasCaliente.jpg", "region": 1,
+  "order": []  },
+  { "name": "Vincunca", "coords": [-13.3653, -71.4413], "description": "Vincunca, auch als Regenbogenberg bekannt, ist ein beeindruckendes Naturwunder.", "folder": "04_Vincunca", "preview": "previews/Vincunca.jpg", "region": 1,
+  "order": []  },
+  { "name": "Titicacasee", "coords": [-15.7654, -69.531], "description": "Der Titicacasee, der höchstgelegene schiffbare See der Welt.", "folder": "05_Titikakasee", "preview": "previews/Titicacasee.jpg", "region": 1,
+  "order": []  },
+  { "name": "La Paz", "coords": [-16.4897, -68.1193], "description": "La Paz, die höchstgelegene Hauptstadt der Welt.", "folder": "06_LaPaz", "preview": "previews/LaPaz.jpg", "region": 1,
+  "order": []  },
+  { "name": "Death Road", "coords": [-16.2225, -68.5613], "description": "Die 'Death Road' ist bekannt als eine der gefährlichsten Straßen der Welt.", "folder": "07_DeathRoad", "preview": "previews/DeathRoad.jpg", "region": 1,
+  "order": []  },
+  { "name": "Pico Austria", "coords": [-16.2548, -68.1435], "description": "Pico Austria ist ein beeindruckender Berg, ideal für Wanderer.", "folder": "08_PicoAustria", "preview": "previews/PicoAustria.jpg", "region": 1,
+  "order": []  },
+  { "name": "Arica", "coords": [-18.475, -70.3155], "description": "Arica ist bekannt für seine Strände und die archäologischen Stätten.", "folder": "09_Arica", "preview": "previews/Arica.jpg", "region": 1,
+  "order": []  },
+  { "name": "Piedras Rojas", "coords": [-23.4121, -68.1355], "description": "Piedras Rojas ist bekannt für seine rot gefärbten Steine.", "folder": "10_PiedrasRojas", "preview": "previews/PiedrasRojas.jpg", "region": 1,
+  "order": []  },
+  { "name": "San Pedro", "coords": [-22.9076, -68.1994], "description": "San Pedro de Atacama ist ein charmantes Wüstenstädtchen.", "folder": "11_SanPedro", "preview": "previews/SanPedro.jpg", "region": 1,
+  "order": []  },
+  { "name": "Villa Mar", "coords": [-21.4264, -67.588], "description": "Villa Mar, ein malerisches Dorf in Bolivien, bekannt für seine Nähe zur Wüste und beeindruckenden Landschaften.", "folder": "12_VillaMar", "preview": "previews/VillaMar.jpg", "region": 1,
+  "order": []  },
+  { "name": "Uyuni", "coords": [-20.4575, -66.847], "description": "Der Salar de Uyuni, die größte Salzfläche der Welt.", "folder": "13_Uyuni", "preview": "previews/Uyuni.jpg", "region": 1,
+  "order": []  },
+  { "name": "Salta", "coords": [-24.7821, -65.4232], "description": "Salta, bekannt für koloniale Architektur und die Andenlandschaft.", "folder": "14_Salta", "preview": "previews/Salta.jpg", "region": 1,
+  "order": []  },
+  { "name": "Corrientes", "coords": [-27.4716, -58.8396], "description": "Corrientes, eine Stadt am Paraná-Fluss mit einzigartiger Kultur.", "folder": "15_Corrientes", "preview": "previews/Corrientes.jpg", "region": 1,
+  "order": []  },
+  { "name": "Puerto Iguazú", "coords": [-25.5972, -54.5782], "description": "Puerto Iguazú, Tor zu den weltberühmten Iguazú-Wasserfällen.", "folder": "16_PuertoIguazu", "preview": "previews/PuertoIguazu.jpg", "region": 1,
+  "order": []  },
+  { "name": "Florianópolis", "coords": [-27.5954, -48.548], "description": "Florianópolis, eine brasilianische Inselstadt bekannt für Strände und Surfen.", "folder": "17_Florianopolis", "preview": "previews/Florianopolis.jpg", "region": 1,
+  "order": []  },
+  { "name": "Montevideo", "coords": [-34.9011, -56.1645], "description": "Montevideo, die Hauptstadt Uruguays, bekannt für ihre Uferpromenade und Geschichte.", "folder": "18_Montevideo", "preview": "previews/Montevideo.jpg", "region": 1,
+  "order": []  },
+  { "name": "Colonia del Sacramento", "coords": [-34.4717, -57.848], "description": "Colonia del Sacramento, eine charmante koloniale Stadt in Uruguay.", "folder": "19_ColoniaDelSacramento", "preview": "previews/ColoniaDelSacramento.jpg", "region": 1,
+  "order": []  },
+  { "name": "Buenos Aires", "coords": [-34.6037, -58.3816], "description": "Buenos Aires, die lebendige Hauptstadt Argentiniens, bekannt für Tango, Kultur und beeindruckende Architektur.", "folder": "20_BuenosAires", "preview": "previews/BuenosAires.jpg", "region": 1,
+  "order": []  },
+  { "name": "Las Vegas", "coords": [36.1699, -115.1398], "description": "Las Vegas, bekannt für ihre Kasinos, Shows und Unterhaltung.", "folder": "21_LasVegas", "preview": "previews/LasVegas.jpg", "region": 2,
+  "order": []  },
+  { "name": "Grand Canyon", "coords": [36.1069, -112.1129], "description": "Der Grand Canyon, eines der beeindruckendsten Naturwunder der Welt, bekannt für seine schiere Größe und Farbenpracht.", "folder": "22_GrandCanyon", "preview": "previews/GrandCanyon.jpg", "region": 2,
+  "order": []  },
+  { "name": "Monument Valley", "coords": [36.9986, -110.0986], "description": "Monument Valley, ein ikonisches Wüstengebiet mit markanten Sandsteinformationen.", "folder": "23_MonumentValley", "preview": "previews/MonumentValley.jpg", "region": 2,
+  "order": []  },
+  { "name": "Antelope Canyon", "coords": [36.8619, -111.3743], "description": "Antelope Canyon, bekannt für seine faszinierenden Sandsteinformationen und Lichtspiele.", "folder": "24_AntelopeCanyon", "preview": "previews/AntelopeCanyon.jpg", "region": 2,
+  "order": []  },
+  { "name": "Bryce Canyon", "coords": [37.593, -112.1871], "description": "Bryce Canyon, ein Nationalpark bekannt für seine Hoodoos, säulenartige Felsformationen.", "folder": "25_BryceCanyon", "preview": "previews/BryceCanyon.jpg", "region": 2,
+  "order": []  },
+  { "name": "Zion Nationalpark", "coords": [37.2982, -113.0263], "description": "Zion Nationalpark, bekannt für seine beeindruckenden Schluchten und Wanderwege.", "folder": "26_ZionNationalpark", "preview": "previews/ZionNationalpark.jpg", "region": 2,
+  "order": []  },
+  { "name": "Las Vegas Silvester", "coords": [36.1699, -115.1398], "description": "Las Vegas, bekannt für ihre Kasinos, Shows und Unterhaltung.", "folder": "27_LasVegas", "preview": "previews/LasVegasSilvester.jpg", "region": 2,
+  "order": []  },
+  { "name": "Death Valley", "coords": [36.5323, -116.9325], "description": "Death Valley, eine der heißesten Regionen der Welt, bekannt für seine einzigartigen Landschaften.", "folder": "28_DeathValley", "preview": "previews/DeathValley.jpg", "region": 2,
+  "order": []  },
+  { "name": "Red Rocks State Park", "coords": [34.9741, -118.2032], "description": "Red Rocks State Park, bekannt für seine leuchtend roten Felsformationen und Wanderwege.", "folder": "29_RedRocksStatePark", "preview": "previews/RedRocksStatePark.jpg", "region": 2,
+  "order": []  },
+  { "name": "Los Angeles", "coords": [34.0522, -118.2437], "description": "Los Angeles, die Stadt der Engel, bekannt für Hollywood, Strände und Unterhaltung.", "folder": "30_LosAngeles", "preview": "previews/LosAngeles.jpg", "region": 2,
+  "order": []  },
+  { "name": "Honolulu", "coords": [21.3069, -157.8583], "description": "Honolulu, die Hauptstadt Hawaiis, bekannt für Waikiki Beach und polynesische Kultur.", "folder": "31_Honolulu", "preview": "previews/Honolulu.jpg", "region": 2,
+  "order": []  },
+  { "name": "Big Island", "coords": [19.5429, -155.6659], "description": "Big Island, die größte Insel Hawaiis, bekannt für den aktiven Vulkan Kīlauea.", "folder": "32_BigIsland", "preview": "previews/BigIsland.jpg", "region": 2,
+  "order": []  },
+  { "name": "Volcano National Park", "coords": [19.4194, -155.2885], "description": "Volcano National Park on Big Island, known for its stunning lava landscapes and active volcanoes.", "folder": "33_VolcanoNationalPark", "preview": "previews/VolcanoNationalPark.jpg", "region": 2,
+  "order": []  },
+  { "name": "Raiatea", "coords": [-16.7134, -152.4344], "description": "Raiatea, eine Insel der Gesellschaftsinseln, bekannt für ihre polynesische Geschichte und das Tempelgebiet Taputapuātea.", "folder": "34_Raiatea", "preview": "previews/Raiatea.jpg", "region": 3,
+  "order": []  },
+  { "name": "Bora Bora", "coords": [-16.5000, -151.7415], "description": "Bora Bora, berühmt für ihre türkisfarbenen Lagunen und luxuriösen Überwasserbungalows.", "folder": "35_BoraBora", "preview": "previews/BoraBora.jpg", "region": 3,
+  "order": []  },
+  { "name": "Moorea", "coords": [-17.5296, -149.8327], "description": "Moorea, eine Insel mit spektakulären Berglandschaften, Stränden und Tauchplätzen.", "folder": "36_Moorea", "preview": "previews/Moorea.jpg", "region": 3,
+  "order": []  },
+  { "name": "Tahiti", "coords": [-17.6509, -149.4260], "description": "Tahiti, die größte Insel Französisch-Polynesiens, bekannt für ihre Märkte, Strände und das kulturelle Erbe.", "folder": "37_Tahiti", "preview": "previews/Tahiti.jpg", "region": 3,
+  "order": []  },
   {
     "name": "Auckland",
     "coords": [-36.8485, -185.2367],
@@ -44,7 +80,8 @@
     "folder": "38_Auckland",
     "preview": "previews/Auckland.jpg",
     "region": 3
-  },
+ ,
+  "order": []  },
   {
     "name": "Cathedral Cove",
     "coords": [-36.8278, 175.7902],
@@ -52,7 +89,8 @@
     "folder": "39_CathedralCove",
     "preview": "previews/CathedralCove.jpg",
     "region": 3
-  },
+ ,
+  "order": []  },
   {
     "name": "Hobbiton",
     "coords": [-37.8722, 175.6825],
@@ -60,7 +98,8 @@
     "folder": "40_Hobbiton",
     "preview": "previews/Hobbiton.jpg",
     "region": 3
-  },
+ ,
+  "order": []  },
   {
     "name": "Rotorua",
     "coords": [-38.1368, 176.2497],
@@ -68,7 +107,8 @@
     "folder": "42_Rotorua",
     "preview": "previews/Rotorua.jpg",
     "region": 3
-  },
+ ,
+  "order": []  },
   {
     "name": "Tongariro National Park",
     "coords": [-39.2904, 175.5626],
@@ -76,7 +116,8 @@
     "folder": "41_Tongariro",
     "preview": "previews/Tongariro.jpg",
     "region": 3
-  },
+ ,
+  "order": []  },
 
   {
     "name": "Mount Taranaki",
@@ -85,7 +126,8 @@
     "folder": "43_Taranaki",
     "preview": "previews/Taranaki.jpg",
     "region": 3
-  },
+ ,
+  "order": []  },
 
     {
       "name": "Wellington",
@@ -94,7 +136,8 @@
       "folder": "44_Wellington",
       "preview": "previews/Wellington.jpg",
       "region": 3
-    },
+   ,
+  "order": []  },
     {
       "name": "Abel Tasman National Park",
       "coords": [-40.8333, 172.9000],
@@ -102,7 +145,8 @@
       "folder": "45_AbelTasman",
       "preview": "previews/AbelTasman.jpg",
       "region": 3
-    },
+   ,
+  "order": []  },
     {
       "name": "Glenorchy",
       "coords": [-44.8535, 168.3825],
@@ -110,7 +154,8 @@
       "folder": "46_Glenorchy",
       "preview": "previews/Glenorchy.jpg",
       "region": 3
-    },
+   ,
+  "order": []  },
   {
     "name": "Milford Sound",
     "coords": [-44.6704, 167.9246],
@@ -118,7 +163,8 @@
     "folder": "47_MilfordSound",
     "preview": "previews/MilfordSound.jpg",
     "region": 3
-  },
+ ,
+  "order": []  },
   {
     "name": "Mount Cook",
     "coords": [-43.5950, 170.1419],
@@ -126,7 +172,8 @@
     "folder": "48_MountCook",
     "preview": "previews/MountCook.jpg",
     "region": 3
-  },
+ ,
+  "order": []  },
   {
     "name": "Rakaia Gorge",
     "coords": [-43.5036, 171.4941],
@@ -134,7 +181,8 @@
     "folder": "49_RakaiaGorge",
     "preview": "previews/RakaiaGorge.jpg",
     "region": 3
-  },
+ ,
+  "order": []  },
   {
     "name": "Christchurch",
     "coords": [-43.5321, 172.6362],
@@ -142,7 +190,8 @@
     "folder": "50_Christchurch",
     "preview": "previews/Christchurch.jpg",
     "region": 3
-  },
+ ,
+  "order": []  },
   {
     "name": "Sydney",
     "coords": [-33.8688, 151.2093],
@@ -150,7 +199,8 @@
     "folder": "51_Sydney",
     "preview": "previews/Sydney.jpg",
     "region": 3
-  },
+ ,
+  "order": []  },
   {
     "name": "Brisbane",
     "coords": [-27.4698, 153.0251],
@@ -158,7 +208,8 @@
     "folder": "52_Brisbane",
     "preview": "previews/Brisbane.jpg",
     "region": 3
-  },
+ ,
+  "order": []  },
   {
     "name": "Singapur",
     "coords": [1.3521, 103.8198],
@@ -166,20 +217,21 @@
     "folder": "53_Singapur",
     "preview": "previews/Singapur.jpg",
     "region": 4
-  },
+ ,
+  "order": []  },
   {
     "name": "Yogyakarta",
-    "coords": [-7.7956, 110.3695],
+    "coords": [
+      -7.7956,
+      110.3695
+    ],
     "description": "Yogyakarta, eine kulturelle Hochburg Indonesiens, bekannt für den Prambanan-Tempel und das Kraton-Palastviertel.",
     "folder": "54_Yogyakarta",
     "preview": "previews/Yogyakarta.jpg",
-    "region": 4
+    "region": 4,
+    "order": []
   }
 
 
 
-
-
-
-
-]
+    ]

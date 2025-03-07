@@ -1,5 +1,8 @@
 package com.aroundtheworld.aroundtheworldbackend.controller;
 
+import com.aroundtheworld.aroundtheworldbackend.model.Stop;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.*;
 
 @RestController
@@ -23,6 +27,10 @@ public class GalleryController {
     private String mediaBasePath;
 
     private String mediaPath = "media";
+
+
+    private static final String EXTERNAL_FILE_PATH = "/opt/AroundTheWorld/stops.json";
+    private static final String INTERNAL_RESOURCE_PATH = "/stops.json";
 
     @PostConstruct
     public void determineMediaBasePath() {
@@ -99,9 +107,88 @@ public class GalleryController {
             entry.put("alt", "Bild oder Video");
             entry.put("type", file.getName().toLowerCase().endsWith(".mp4") ? "Video" : "3DPic");
             entry.put("panorama", isPanorama);
+            entry.put("originalName", originalName);
 
             gallery.add(entry);
         }
+
+
+        String EXTERNAL_FILE_PATH = "/opt/AroundTheWorld/stops.json";
+        String INTERNAL_RESOURCE_PATH = "/stops.json";
+
+        List<Stop> stops = new ArrayList<>();
+
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+
+            // 1. Prüfen, ob die externe Datei existiert
+            File externalFile = new File(EXTERNAL_FILE_PATH);
+            if (externalFile.exists()) {
+                stops = mapper.readValue(externalFile, new TypeReference<List<Stop>>() {
+                });
+            }
+
+            // 2. Falls nicht, die Datei aus dem JAR laden
+            InputStream is = getClass().getResourceAsStream(INTERNAL_RESOURCE_PATH);
+            if (is != null) {
+                stops = mapper.readValue(is, new TypeReference<List<Stop>>() {});
+
+
+            }
+
+
+            Optional<Stop> foundStop = stops.stream()
+                    .filter(folder -> folder.getFolder().equals(stop))
+                    .findFirst();
+
+            if (foundStop.isPresent()) {
+                System.out.println("Gefundener Stop: " + foundStop.get().getName());
+                System.out.println("Order: " + foundStop.get().getOrder());
+                Stop currentStop = foundStop.get();
+
+
+                gallery.forEach(entry -> {
+                    if (!currentStop.getOrder().contains(entry.get("originalName").toString())) {
+                        if (!currentStop.getOrder().contains(entry.get("originalName").toString())) {
+                            currentStop.getOrder().add(entry.get("originalName").toString());
+                            System.out.println(entry.get("originalName").toString() + " added to order");
+                        }
+                    }
+                });
+
+
+
+                // Falls die Datei existiert, aktualisieren und zurückschreiben
+                if (externalFile.exists()) {
+                    try {
+                        mapper.writeValue(externalFile, stops);
+                        System.out.println("Stops erfolgreich aktualisiert und gespeichert.");
+                    } catch (Exception e) {
+                        throw new RuntimeException("Fehler beim Speichern der Stops.json", e);
+                    }
+                } else {
+                    System.out.println("Externe Datei existiert nicht, Änderungen wurden nicht gespeichert.");
+                }
+
+
+            } else {
+                System.out.println("Kein Stop mit folder = " + stop + " gefunden.");
+            }
+
+
+
+
+
+
+
+        } catch (Exception e) {
+            throw new RuntimeException("Fehler beim Lesen der Stops", e);
+        }
+
+
+
+
+
 
         return ResponseEntity.ok(gallery);
     }
