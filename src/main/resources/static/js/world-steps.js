@@ -342,11 +342,11 @@ class WorldSteps extends HTMLElement {
             const midPoint = [midLat, midLng];
 
             // 1. Zoom out to the midpoint
-            this.map.flyTo(midPoint, 3, { duration: 1.5 });
+            this.map.flyTo(midPoint, 3, { duration: 2.5 });
 
             // 2. Delay, then zoom to next stop
             setTimeout(() => {
-              this.map.flyTo(nextCoords, 10, { duration: 1.5 });
+              this.map.flyTo(nextCoords, 10, { duration: 2.5 });
 
               // 3. Ensure next stop is perfectly centered
               setTimeout(() => {
@@ -355,7 +355,7 @@ class WorldSteps extends HTMLElement {
             }, 1800);
           } else {
             // If no previous stop, go directly to next stop
-            this.map.flyTo(stop.coords, 10, { duration: 1.5 });
+            this.map.flyTo(stop.coords, 10, { duration: 2.5 });
 
             setTimeout(() => {
               this.map.panTo(stop.coords);

@@ -149,16 +149,34 @@
     "description": "Sydney, Australiens größte Stadt, berühmt für das Opernhaus, die Harbour Bridge und wunderschöne Strände.",
     "folder": "51_Sydney",
     "preview": "previews/Sydney.jpg",
-    "region": 4
+    "region": 3
   },
   {
     "name": "Brisbane",
     "coords": [-27.4698, 153.0251],
     "description": "Brisbane, die Hauptstadt von Queensland, bietet eine lebendige Kulturszene, Flusspromenaden und tropisches Klima.",
-    "folder": "54_Brisbane",
+    "folder": "52_Brisbane",
     "preview": "previews/Brisbane.jpg",
+    "region": 3
+  },
+  {
+    "name": "Singapur",
+    "coords": [1.3521, 103.8198],
+    "description": "Singapur, eine moderne Metropole mit beeindruckender Skyline, kulinarischer Vielfalt und dem berühmten Marina Bay Sands.",
+    "folder": "53_Singapur",
+    "preview": "previews/Singapur.jpg",
     "region": 4
+  },
+  {
+    "name": "Yogyakarta",
+    "coords": [-7.7956, 110.3695],
+    "description": "Yogyakarta, eine kulturelle Hochburg Indonesiens, bekannt für den Prambanan-Tempel und das Kraton-Palastviertel.",
+    "folder": "54_Yogyakarta",
+    "preview": "previews/Yogyakarta.jpg",
+    "region": 5
   }
+
+
 
 
 
