@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sortable Gallery</title>
+  <!-- SortableJS über CDN einbinden -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+  <style>
+    /* Stil für die Liste und Bilder */
+    #sortable-list {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    #sortable-list li {
+      display: inline-block;
+      margin: 10px;
+      position: relative;
+    }
+
+    #sortable-list li img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+    }
+
+    /* Tooltip für den originalName bei Hover */
+    #sortable-list li .tooltip {
+      display: none;
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 5px;
+      border-radius: 5px;
+    }
+
+    #sortable-list li:hover .tooltip {
+      display: block;
+    }
+
+    /* Stil für den JSON-Ausgabebereich */
+    #json-output {
+      margin-top: 20px;
+      white-space: pre-wrap;
+      background-color: #f4f4f4;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    /* Stil für den Entfernen-Button */
+    .remove-btn {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 5px;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<script>
+  async function loadGallery(stopName, componentId) {
+    const apiUrl = `${window.location.origin}/api/gallery/${stopName}`;
+    try {
+      const response = await fetch(apiUrl);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch gallery data: ${response.statusText}`);
+      }
+
+      const galleryData = await response.json();
+
+      // Liste vorbereiten
+      const listContainer = document.getElementById(componentId);
+      listContainer.innerHTML = ''; // Lösche alle bestehenden Listenelemente
+
+      galleryData.forEach(item => {
+        // Erstelle das Listenelement
+        const listItem = document.createElement('li');
+        listItem.setAttribute('data-id', item.originalName); // Füge das originalName als Datenattribut hinzu
+
+        // Erstelle das Bild-Element
+        const img = document.createElement('img');
+        img.src = item.thumbnail; // Setze das Bild aus thumbnail
+        img.alt = 'Thumbnail';
+
+        // Erstelle den Tooltip (originalName) für Hover
+        const tooltip = document.createElement('span');
+        tooltip.classList.add('tooltip');
+        tooltip.textContent = item.originalName; // originalName im Tooltip anzeigen
+
+        // Erstelle den Entfernen-Button
+        const removeBtn = document.createElement('button');
+        removeBtn.classList.add('remove-btn');
+        removeBtn.textContent = 'Entfernen';
+        removeBtn.addEventListener('click', () => {
+          listItem.remove(); // Entfernt das Listenelement
+          const updatedGalleryData = galleryData.filter(g => g.originalName !== item.originalName); // Entfernt das Objekt aus dem Array
+          // JSON unterhalb der Galerie aktualisieren
+          const jsonOutput = document.getElementById('json-output');
+          jsonOutput.textContent = JSON.stringify(updatedGalleryData, null, 2); // Zeigt das JSON formatiert an
+        });
+
+        // Füge das Bild, Tooltip und Entfernen-Button zum Listenelement hinzu
+        listItem.appendChild(img);
+        listItem.appendChild(tooltip);
+        listItem.appendChild(removeBtn);
+
+        // Füge das Listenelement zur Liste hinzu
+        listContainer.appendChild(listItem);
+      });
+
+      // SortableJS initialisieren
+      const sortable = new Sortable(listContainer, {
+        animation: 150, // Option für Animation beim Sortieren
+        ghostClass: 'sortable-ghost', // Klasse für das "verschobene" Element
+        dragClass: 'sortable-drag', // Klasse für das gezogene Element
+      });
+
+      // Button zum Speichern der neuen Sortierung
+      document.getElementById('save-btn').addEventListener('click', () => {
+        const sortedItems = sortable.toArray(); // Holt die neue Reihenfolge der Listenelemente
+        const updatedGalleryData = sortedItems.map(id => {
+          return galleryData.find(item => item.originalName === id); // Ordnet die original Daten basierend auf der neuen Reihenfolge
+        });
+
+        // JSON unterhalb der Galerie anzeigen
+        const jsonOutput = document.getElementById('json-output');
+        jsonOutput.textContent = JSON.stringify(updatedGalleryData, null, 2); // Zeigt das JSON formatiert an
+      });
+
+    } catch (error) {
+      console.error('Error loading gallery:', error);
+    }
+  }
+
+  // Lädt die Galerie für "15_Corrientes" und setzt sie in die Liste
+  document.addEventListener('DOMContentLoaded', () => {
+    loadGallery("15_Corrientes", "sortable-list");
+  });
+</script>
+<body>
+<h1>Sortable Gallery</h1>
+<ul id="sortable-list">
+  <!-- Die Galerieeinträge werden hier hinzugefügt -->
+</ul>
+
+<!-- Button zum Speichern der Sortierung -->
+<button id="save-btn">Speichern der Sortierung</button>
+
+<!-- Bereich zum Anzeigen des aktualisierten JSON -->
+<div id="json-output"></div>
+</body>
+</html>

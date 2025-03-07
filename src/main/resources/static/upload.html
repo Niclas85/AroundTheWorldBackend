@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drag-and-Drop Upload mit Dropzone.js</title>
+  <!-- Füge Dropzone.js CSS hinzu -->
+  <link rel="stylesheet" href="https://unpkg.com/dropzone@5.9.3/dist/min/dropzone.min.css">
+  <style>
+    /* Optionale Anpassungen für das Erscheinungsbild */
+    #my-dropzone {
+      width: 80%;
+      margin: 50px auto;
+      padding: 20px;
+      border: 2px dashed #007bff;
+      background-color: #f7f7f7;
+      text-align: center;
+      border-radius: 8px;
+    }
+    .dz-message {
+      font-size: 18px;
+      color: #007bff;
+    }
+  </style>
+</head>
+<body>
+<h1 style="text-align: center;">Bilder und Videos hochladen</h1>
+
+<!-- Dropzone Container -->
+<div id="my-dropzone" class="dropzone">
+  <p>Ziehe deine Dateien hierher oder klicke zum Auswählen</p>
+</div>
+
+<!-- Füge Dropzone.js Script hinzu -->
+<script src="https://unpkg.com/dropzone@5.9.3/dist/min/dropzone.min.js"></script>
+<script>
+  // Initialisiere Dropzone
+  Dropzone.options.myDropzone = {
+    url: "http://localhost:80/upload",  // Dein Spring Boot Backend-Endpunkt
+    paramName: "file",  // Der Name des Parameters, der im Server ankommt
+    maxFilesize: 10,  // Maximalgröße der Datei in MB
+    acceptedFiles: "image/*,video/*",  // Nur Bilder und Videos
+    addRemoveLinks: true,
+    dictDefaultMessage: "Ziehe Dateien hierher oder klicke zum Auswählen",
+    dictFallbackMessage: "Ihr Browser unterstützt kein Drag-and-Drop.",
+    dictInvalidFileType: "Dieser Dateityp ist nicht erlaubt.",
+    dictFileTooBig: "Die Datei ist zu groß (max {{maxFilesize}} MB).",
+    dictResponseError: "Server antwortete mit dem Fehlercode {{statusCode}}.",
+
+    // Hier fügen wir den Unterordner als zusätzlichen Parameter hinzu
+    init: function() {
+      this.on("sending", function(file, xhr, formData) {
+        // Sende den Unterordner als Parameter mit
+        const subfolder = "meinUnterordner";  // Hier kannst du dynamisch den Unterordner setzen
+        formData.append("subfolder", subfolder);
+      });
+    },
+
+    // Erfolgsbehandlung
+    success: function(file, response) {
+      alert("Erfolgreich hochgeladen: " + response);
+    },
+
+    // Fehlerbehandlung
+    error: function(file, response) {
+      alert("Fehler beim Hochladen: " + response);
+    }
+  };
+</script>
+</body>
+</html>
