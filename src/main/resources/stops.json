@@ -28,7 +28,7 @@
   { "name": "Salta", "coords": [-24.7821, -65.4232], "description": "Salta, bekannt für koloniale Architektur und die Andenlandschaft.", "folder": "14_Salta", "preview": "previews/Salta.jpg", "region": 1,
   "order": []  },
   { "name": "Corrientes", "coords": [-27.4716, -58.8396], "description": "Corrientes, eine Stadt am Paraná-Fluss mit einzigartiger Kultur.", "folder": "15_Corrientes", "preview": "previews/Corrientes.jpg", "region": 1,
-  "order": []  },
+  "order": ["PXL_20241202_183224122.jpg", "PXL_20241202_184034537.MP.jpg", "PXL_20241202_225834816.jpg" , "PXL_20241202_233627446.jpg"]  },
   { "name": "Puerto Iguazú", "coords": [-25.5972, -54.5782], "description": "Puerto Iguazú, Tor zu den weltberühmten Iguazú-Wasserfällen.", "folder": "16_PuertoIguazu", "preview": "previews/PuertoIguazu.jpg", "region": 1,
   "order": []  },
   { "name": "Florianópolis", "coords": [-27.5954, -48.548], "description": "Florianópolis, eine brasilianische Inselstadt bekannt für Strände und Surfen.", "folder": "17_Florianopolis", "preview": "previews/Florianopolis.jpg", "region": 1,

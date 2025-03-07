@@ -48,10 +48,21 @@ public class GalleryController {
         }
 
         List<Map<String, Object>> gallery = getMediaFiles(stopFolder, stop, host);
+
+
         List<Stop> stops = loadStops();
 
         Optional<Stop> foundStop = stops.stream().filter(folder -> folder.getFolder().equals(stop)).findFirst();
-        foundStop.ifPresent(currentStop -> updateStopOrder(currentStop, gallery, stops));
+        foundStop.ifPresent(currentStop -> {
+            updateStopOrder(currentStop, gallery, stops);
+            gallery.sort(Comparator.comparingInt(entry ->
+                    currentStop.getOrder().indexOf(entry.get("originalName").toString())
+            ));
+
+                }
+        );
+
+
 
 
         return ResponseEntity.ok(gallery);
