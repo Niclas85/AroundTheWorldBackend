@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery Page</title>
+</head>
+<link rel="stylesheet" href="https://unpkg.com/dropzone@5.9.3/dist/min/dropzone.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+<script src="https://unpkg.com/dropzone@5.9.3/dist/min/dropzone.min.js"></script>
+<script>
+  class GalleryEditor extends HTMLElement {
+    constructor() {
+      super();
+      this.attachShadow({ mode: "open" });
+      this.galleryName = this.getAttribute("gallery-name") || "defaultGallery";
+      this.galleryData = [];
+      this.render();
+    }
+
+    connectedCallback() {
+      this.loadGallery();
+      this.setupDropzone();
+      this.setupSortable();
+      this.shadowRoot.getElementById("save-btn").addEventListener("click", () => this.saveSorting());
+    }
+
+    render() {
+      this.shadowRoot.innerHTML = `
+      <link rel="stylesheet" href="https://unpkg.com/dropzone@5.9.3/dist/min/dropzone.min.css">
+      <style>
+        :host { display: block; font-family: Arial, sans-serif; text-align: center; }
+        #my-dropzone { width: 80%; margin: 20px auto; padding: 20px; border: 2px dashed #007bff; background-color: #f7f7f7; border-radius: 8px; }
+        #sortable-list { list-style-type: none; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; }
+        #sortable-list li { display: inline-block; margin: 10px; position: relative; }
+        #sortable-list li img { width: 150px; height: 150px; object-fit: cover; border-radius: 5px; }
+        .remove-btn, .rename-btn { position: absolute; top: 5px; background-color: red; color: white; border: none; padding: 5px; cursor: pointer; border-radius: 3px; }
+        .rename-btn { left: 5px; background-color: blue; }
+        #json-output { margin-top: 20px; white-space: pre-wrap; background-color: #f4f4f4; padding: 10px; border-radius: 5px; text-align: left; }
+      </style>
+      <h1>Galerie bearbeiten: ${this.galleryName}</h1>
+      <div id="my-dropzone" class="dropzone"><p>Ziehe deine Dateien hierher oder klicke zum Auswählen</p></div>
+      <ul id="sortable-list"></ul>
+      <button id="save-btn">Sortierung speichern</button>
+      <div id="json-output"></div>
+    `;
+    }
+
+    async loadGallery() {
+      try {
+        const response = await fetch(`/api/gallery/${this.galleryName}`);
+        this.galleryData = await response.json();
+        this.updateGallery();
+      } catch (error) {
+        console.error("Error loading gallery:", error);
+      }
+    }
+
+    updateGallery() {
+      const list = this.shadowRoot.getElementById("sortable-list");
+      list.innerHTML = "";
+      this.galleryData.forEach(item => this.addFileToGallery(item.originalName, item.thumbnail));
+    }
+
+    setupDropzone() {
+      const galleryEditorInstance = this; // Referenz auf die aktuelle Instanz der GalleryEditor-Klasse
+      new Dropzone(this.shadowRoot.getElementById("my-dropzone"), {
+        url: "http://localhost:80/upload",
+        paramName: "file",
+        maxFilesize: 10,
+        acceptedFiles: "image/*,video/*",
+        addRemoveLinks: true,
+        dictDefaultMessage: "Ziehe Dateien hierher oder klicke zum Auswählen",
+        init: function() {
+          // 'this' ist nun die Dropzone-Instanz, daher wird galleryEditorInstance verwendet
+          this.on("success", function(file) {
+            galleryEditorInstance.addFileToGallery(file.name, file.dataURL || file.previewElement.querySelector("img").src);
+          });
+        }
+      });
+    }
+
+    setupSortable() {
+      new Sortable(this.shadowRoot.getElementById("sortable-list"), {
+        animation: 150,
+        ghostClass: "sortable-ghost"
+      });
+    }
+
+    addFileToGallery(originalName, thumbnail) {
+      const listItem = document.createElement("li");
+      listItem.setAttribute("data-id", originalName);
+      listItem.innerHTML = `
+      <img src="${thumbnail}" alt="Thumbnail">
+      <button class="rename-btn">Umbenennen</button>
+      <button class="remove-btn">Entfernen</button>
+    `;
+      listItem.querySelector(".remove-btn").addEventListener("click", () => this.removeFileFromGallery(originalName, listItem));
+      listItem.querySelector(".rename-btn").addEventListener("click", () => this.renameFileInGallery(originalName, listItem));
+      this.shadowRoot.getElementById("sortable-list").appendChild(listItem);
+      this.galleryData.push({ originalName, thumbnail });
+      this.updateJsonOutput();
+    }
+
+    removeFileFromGallery(originalName, listItem) {
+      listItem.remove();
+      this.galleryData = this.galleryData.filter(g => g.originalName !== originalName);
+      this.updateJsonOutput();
+    }
+
+    renameFileInGallery(originalName, listItem) {
+      const newName = prompt("Neuer Dateiname:", originalName);
+      if (newName && newName.trim() !== "" && newName !== originalName) {
+        listItem.setAttribute("data-id", newName);
+        this.galleryData.find(g => g.originalName === originalName).originalName = newName;
+        this.updateJsonOutput();
+      }
+    }
+
+    saveSorting() {
+      const sortedItems = [...this.shadowRoot.getElementById("sortable-list").children].map(li => li.getAttribute("data-id"));
+      this.galleryData.sort((a, b) => sortedItems.indexOf(a.originalName) - sortedItems.indexOf(b.originalName));
+      this.updateJsonOutput();
+    }
+
+    updateJsonOutput() {
+      this.shadowRoot.getElementById("json-output").textContent = JSON.stringify(this.galleryData, null, 2);
+    }
+  }
+
+  customElements.define("gallery-editor", GalleryEditor);
+</script>
+
+<body>
+<h1>Gallery: 15_Corrientes</h1>
+<gallery-editor gallery-name="15_Corrientes"></gallery-editor>
+</body>
+</html>
