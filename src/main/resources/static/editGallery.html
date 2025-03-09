@@ -292,7 +292,12 @@
 
   // Lädt die Galerie für "15_Corrientes" und setzt sie in die Liste
   document.addEventListener('DOMContentLoaded', () => {
-    loadGallery("15_Corrientes", "sortable-list");
+    // URL-Parameter auslesen
+    const urlParams = new URLSearchParams(window.location.search);
+    const galleryName = urlParams.get("galleryName") || "defaultGallery";
+
+    // Galerie mit dynamischem Namen laden
+    loadGallery(galleryName, "sortable-list");
   });
 
   // Speichern der Sortierung
