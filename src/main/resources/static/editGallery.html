@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Gallery</title>
+  <link rel="stylesheet" href="https://unpkg.com/dropzone@5.9.3/dist/min/dropzone.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+  <script src="https://unpkg.com/dropzone@5.9.3/dist/min/dropzone.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      text-align: center;
+    }
+    #my-dropzone {
+      width: 80%;
+      margin: 20px auto;
+      padding: 20px;
+      border: 2px dashed #007bff;
+      background-color: #f7f7f7;
+      text-align: center;
+      border-radius: 8px;
+    }
+    #sortable-list {
+      list-style-type: none;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    #sortable-list li {
+      display: inline-block;
+      margin: 10px;
+      position: relative;
+    }
+    #sortable-list li img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+    .tooltip {
+      display: none;
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 5px;
+      border-radius: 5px;
+    }
+    #sortable-list li:hover .tooltip {
+      display: block;
+    }
+    .remove-btn {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 5px;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+    #json-output {
+      margin-top: 20px;
+      white-space: pre-wrap;
+      background-color: #f4f4f4;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Galerie bearbeiten</h1>
+
+<!-- Dropzone -->
+<div id="my-dropzone" class="dropzone">
+  <p>Ziehe deine Dateien hierher oder klicke zum Auswählen</p>
+</div>
+
+<!-- Sortable Gallery -->
+<ul id="sortable-list"></ul>
+
+<!-- Speichern Button -->
+<button id="save-btn">Sortierung speichern</button>
+
+<!-- JSON-Output -->
+<div id="json-output"></div>
+
+<script>
+  let galleryData = [];
+
+  // Dropzone initialisieren
+  Dropzone.options.myDropzone = {
+    url: "http://localhost:80/upload",
+    paramName: "file",
+    maxFilesize: 10,
+    acceptedFiles: "image/*,video/*",
+    addRemoveLinks: true,
+    dictDefaultMessage: "Ziehe Dateien hierher oder klicke zum Auswählen",
+
+    init: function() {
+      this.on("sending", function(file, xhr, formData) {
+        formData.append("subfolder", "meinUnterordner");
+      });
+
+      this.on("success", function(file, response) {
+        addFileToGallery(file.name, file.dataURL || file.previewElement.querySelector("img").src);
+      });
+
+      this.on("error", function(file, response) {
+        alert("Fehler beim Hochladen: " + response);
+      });
+    }
+  };
+
+  function addFileToGallery(originalName, thumbnail) {
+    const listContainer = document.getElementById("sortable-list");
+
+    const listItem = document.createElement("li");
+    listItem.setAttribute("data-id", originalName);
+
+    const img = document.createElement("img");
+    img.src = thumbnail;
+    img.alt = "Thumbnail";
+
+    const tooltip = document.createElement("span");
+    tooltip.classList.add("tooltip");
+    tooltip.textContent = originalName;
+
+    // Entfernen-Button
+    const removeBtn = document.createElement("button");
+    removeBtn.classList.add("remove-btn");
+    removeBtn.textContent = "Entfernen";
+    removeBtn.addEventListener("click", () => {
+      listItem.remove();
+      galleryData = galleryData.filter(g => g.originalName !== originalName);
+      updateJsonOutput();
+    });
+
+    // Umbenennen-Button
+    const renameBtn = document.createElement("button");
+    renameBtn.textContent = "Umbenennen";
+    renameBtn.style.position = "absolute";
+    renameBtn.style.top = "5px";
+    renameBtn.style.left = "5px";
+    renameBtn.style.backgroundColor = "blue";
+    renameBtn.style.color = "white";
+    renameBtn.style.border = "none";
+    renameBtn.style.padding = "5px";
+    renameBtn.style.cursor = "pointer";
+    renameBtn.style.borderRadius = "3px";
+
+    renameBtn.addEventListener("click", () => {
+      const newName = prompt("Neuer Dateiname:", originalName);
+      if (newName && newName.trim() !== "" && newName !== originalName) {
+        listItem.setAttribute("data-id", newName);
+        tooltip.textContent = newName;
+        const file = galleryData.find(g => g.originalName === originalName);
+        if (file) {
+          file.originalName = newName;
+        }
+        updateJsonOutput();
+      }
+    });
+
+    listItem.appendChild(img);
+    listItem.appendChild(tooltip);
+    listItem.appendChild(renameBtn);
+    listItem.appendChild(removeBtn);
+    listContainer.appendChild(listItem);
+
+    galleryData.push({ originalName, thumbnail });
+    updateJsonOutput();
+  }
+
+  // JSON-Daten aktualisieren
+  function updateJsonOutput() {
+    document.getElementById("json-output").textContent = JSON.stringify(galleryData, null, 2);
+  }
+
+  // Galerie mit SortableJS aktivieren
+  async function loadGallery(stopName, componentId) {
+    const apiUrl = `${window.location.origin}/api/gallery/${stopName}`;
+    try {
+      const response = await fetch(apiUrl);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch gallery data: ${response.statusText}`);
+      }
+
+      const galleryData = await response.json();
+
+      // Liste vorbereiten
+      const listContainer = document.getElementById(componentId);
+      listContainer.innerHTML = ''; // Lösche alle bestehenden Listenelemente
+
+      galleryData.forEach(item => {
+        // Erstelle das Listenelement
+        const listItem = document.createElement('li');
+        listItem.setAttribute('data-id', item.originalName); // Füge das originalName als Datenattribut hinzu
+
+        // Erstelle das Bild-Element
+        const img = document.createElement('img');
+        img.src = item.thumbnail; // Setze das Bild aus thumbnail
+        img.alt = 'Thumbnail';
+
+        // Erstelle den Tooltip (originalName) für Hover
+        const tooltip = document.createElement('span');
+        tooltip.classList.add('tooltip');
+        tooltip.textContent = item.originalName; // originalName im Tooltip anzeigen
+
+        // Erstelle den Entfernen-Button
+        const removeBtn = document.createElement('button');
+        removeBtn.classList.add('remove-btn');
+        removeBtn.textContent = 'Entfernen';
+        removeBtn.addEventListener('click', () => {
+          listItem.remove(); // Entfernt das Listenelement
+          const updatedGalleryData = galleryData.filter(g => g.originalName !== item.originalName); // Entfernt das Objekt aus dem Array
+          // JSON unterhalb der Galerie aktualisieren
+          const jsonOutput = document.getElementById('json-output');
+          jsonOutput.textContent = JSON.stringify(updatedGalleryData, null, 2); // Zeigt das JSON formatiert an
+        });
+
+
+
+        const renameBtn = document.createElement("button");
+        renameBtn.textContent = "Umbenennen";
+        renameBtn.style.position = "absolute";
+        renameBtn.style.top = "5px";
+        renameBtn.style.left = "5px";
+        renameBtn.style.backgroundColor = "blue";
+        renameBtn.style.color = "white";
+        renameBtn.style.border = "none";
+        renameBtn.style.padding = "5px";
+        renameBtn.style.cursor = "pointer";
+        renameBtn.style.borderRadius = "3px";
+
+        renameBtn.addEventListener("click", () => {
+          const newName = prompt("Neuer Dateiname:", item.originalName);
+          if (newName && newName.trim() !== "" && newName !== item.originalName) {
+            listItem.setAttribute("data-id", newName);
+            tooltip.textContent = newName;
+            const file = galleryData.find(g => g.originalName === item.originalName);
+            if (file) {
+              file.originalName = newName;
+            }
+            updateJsonOutput();
+          }
+        });
+
+// Den Rename-Button zu listItem hinzufügen
+
+
+        // Füge das Bild, Tooltip und Entfernen-Button zum Listenelement hinzu
+        listItem.appendChild(img);
+        listItem.appendChild(tooltip);
+        listItem.appendChild(removeBtn);
+        listItem.appendChild(renameBtn);
+        // Füge das Listenelement zur Liste hinzu
+        listContainer.appendChild(listItem);
+      });
+
+      // SortableJS initialisieren
+      const sortable = new Sortable(listContainer, {
+        animation: 150, // Option für Animation beim Sortieren
+        ghostClass: 'sortable-ghost', // Klasse für das "verschobene" Element
+        dragClass: 'sortable-drag', // Klasse für das gezogene Element
+      });
+
+      // Button zum Speichern der neuen Sortierung
+      document.getElementById('save-btn').addEventListener('click', () => {
+        const sortedItems = sortable.toArray(); // Holt die neue Reihenfolge der Listenelemente
+        const updatedGalleryData = sortedItems.map(id => {
+          return galleryData.find(item => item.originalName === id); // Ordnet die original Daten basierend auf der neuen Reihenfolge
+        });
+
+        // JSON unterhalb der Galerie anzeigen
+        const jsonOutput = document.getElementById('json-output');
+        jsonOutput.textContent = JSON.stringify(updatedGalleryData, null, 2); // Zeigt das JSON formatiert an
+      });
+
+    } catch (error) {
+      console.error('Error loading gallery:', error);
+    }
+  }
+
+  // Lädt die Galerie für "15_Corrientes" und setzt sie in die Liste
+  document.addEventListener('DOMContentLoaded', () => {
+    loadGallery("15_Corrientes", "sortable-list");
+  });
+
+  // Speichern der Sortierung
+  document.getElementById("save-btn").addEventListener("click", () => {
+    const sortedItems = [...document.getElementById("sortable-list").children].map(li => li.getAttribute("data-id"));
+    galleryData.sort((a, b) => sortedItems.indexOf(a.originalName) - sortedItems.indexOf(b.originalName));
+    updateJsonOutput();
+  });
+</script>
+
+</body>
+</html>
