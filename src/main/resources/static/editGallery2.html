@@ -13,17 +13,22 @@
     constructor() {
       super();
       this.attachShadow({ mode: "open" });
+      console.log("Gallery Name Attribute:", this.getAttribute("gallery-name")); // Debug-Ausgabe
       this.galleryName = this.getAttribute("gallery-name") || "defaultGallery";
+      console.log("Final Gallery Name:", this.galleryName); // Prüfe, ob der Wert korrekt gesetzt wird
       this.galleryData = [];
       this.render();
     }
 
     connectedCallback() {
+      this.galleryName = this.getAttribute("gallery-name") || "defaultGallery";
+      console.log("Gallery Name in connectedCallback:", this.galleryName); // Sollte nun 15_Corrientes sein
       this.loadGallery();
       this.setupDropzone();
       this.setupSortable();
       this.shadowRoot.getElementById("save-btn").addEventListener("click", () => this.saveSorting());
     }
+
 
     render() {
       this.shadowRoot.innerHTML = `
@@ -127,6 +132,13 @@
       this.shadowRoot.getElementById("json-output").textContent = JSON.stringify(this.galleryData, null, 2);
     }
   }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const gallery = document.querySelector("gallery-editor");
+    console.log("Gallery Element:", gallery);
+    console.log("Gallery Name:", gallery?.getAttribute("gallery-name"));
+  });
+
 
   customElements.define("gallery-editor", GalleryEditor);
 </script>
